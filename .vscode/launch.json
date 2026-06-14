@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:prActIce}",
+            "name": "Debug prActIce",
+            "target": "prActIce",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug prActIce"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:prActIce}",
+            "name": "Release prActIce",
+            "target": "prActIce",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release prActIce"
+        }
+    ]
+}
