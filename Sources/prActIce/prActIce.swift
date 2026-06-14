@@ -7,13 +7,6 @@ struct prActIce {
     static func main() {
         let practiceStore = Persistance<[question]>(filename: "practice.json")
         let practiceList: [question] = practiceStore.read() ?? []
-        // for ques in practiceList {
-        //     print(ques.subject)
-        //     print(ques.question)
-        //     if ques.isWrong(){
-        //         print("Wrong Question!")
-        //     }
-        // }
         let tui = SwiftTUI.shared
         while true {
             let options = ["做题", "回顾", "退出"]
