@@ -54,9 +54,9 @@ indirect enum Key {
     case arrowLeft
     case arrowRight
 
-    case ctrl(Key)
-    case alt(Key)
-    case shift(Key)
+    case ctrl(Key?)
+    case alt(Key?)
+    case shift(Key?)
     case fKey
 }
 
@@ -211,11 +211,11 @@ class SwiftTUI {
                 if keyEvent.bKeyDown == true && keyEvent.wRepeatCount > 0 {
                     let char = keyEvent.uChar.UnicodeChar
                     let vk = keyEvent.wVirtualKeyCode
-                    var key: Key
+                    var key: Key?
                     
                     if char != 0 {
                         let character = Character(UnicodeScalar(Int(char))!)
-                        key = getKey(character) ?? .space
+                        key = getKey(character)
                     }
 
                     switch vk {
@@ -228,7 +228,10 @@ class SwiftTUI {
                     case 0x09: key = .tab
                     case 0x08: key = .backspace
                     case 0x2E: key = .delete
-                    default: key = .fKey
+                    default: 
+                        if key == nil {
+                            key = .fKey
+                        }
                     }
                     let controlState = keyEvent.dwControlKeyState
                     if controlState & DWORD(LEFT_CTRL_PRESSED) != 0 || controlState & DWORD(RIGHT_CTRL_PRESSED) != 0 {
@@ -240,7 +243,7 @@ class SwiftTUI {
                     if controlState & DWORD(SHIFT_PRESSED) != 0 {
                         key = .shift(key)
                     }
-                    return key
+                    return key ?? .space
                 }
             }
         }
