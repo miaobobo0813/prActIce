@@ -38,10 +38,14 @@ struct prActIce {
                 default:
                     sub = .Math
                 }
-                tui.Text("学科：\(subjects[choiceSub])", x: 0, y: 0, color: .title)
-                return
+                tui.Text("学科：\(subjects[choiceSub])", color: .title)
+                var sum = tui.TextField("题量")
+                tui.clean()
+                tui.Text("题量：\(sum)")
+                tui.Text("按下任意键继续...")
+                tui.waitKey()
             case 1:
-                tui.Text("回顾", x: 0, y: 0, color: .title)
+                tui.Text("回顾", color: .title)
                 tui.Text("按下任意键继续...")
                 tui.waitKey()
             case 2:
