@@ -176,6 +176,9 @@ class SwiftTUI {
         default: return nil
         }
     }
+    public func getWidth(_ text: String) -> Int {
+        return text.reduce(0) { $0+($1.isASCII ? 1 : 2) }
+    }
 
     public func clean(){
         print("\u{001B}[2J\u{001B}[H", terminator: "")
@@ -277,7 +280,7 @@ class SwiftTUI {
         }
         Text("")
         Text("↑↓ 移动高亮项 | ↩ 选择", color: .info)
-        moveTo(x: Int16(items[0].count+1), y: 2)
+        moveTo(x: Int16(getWidth(items[0])), y: 2)
 
         while true {
             let key = readKey()
@@ -303,7 +306,6 @@ class SwiftTUI {
             }
         }
     }
-    
     public func TextField(_ title: String, x: Int16? = nil, y: Int16? = nil, titleColor: Color = .white) -> String {
         if let x=x, let y=y{
             moveTo(x: x, y: y)
@@ -312,7 +314,7 @@ class SwiftTUI {
         Text(" | ", nextLine: false)
         Text("")
         Text("↩ 完成", color: .info)
-        moveTo(x: Int16(title.count)+5, y: nowY-2)
+        moveTo(x: Int16(getWidth(title))+3, y: nowY-2)
         var mode: DWORD = 0
         GetConsoleMode(hStdin, &mode)
         mode |= DWORD(ENABLE_LINE_INPUT | ENABLE_ECHO_INPUT)
@@ -321,6 +323,30 @@ class SwiftTUI {
         GetConsoleMode(hStdin, &mode)
         mode &= ~DWORD(ENABLE_LINE_INPUT | ENABLE_ECHO_INPUT)
         SetConsoleMode(hStdin, mode)
+        Text(String(repeating: " ", count: getWidth(input)), x: 0, y: nowY, nextLine: false)
+        moveTo(x: 0, y: nowY+1)
+        Text("       ", x: 0, y: nowY, nextLine: false)
+        moveTo(x: 0, y: nowY-1)
         return input
+    }
+    public func LoadingSpinner(title: String = "正在处理，请等待...", done: String = "✓ 已完成", until: @escaping () async -> Void, x: Int16? = nil, y: Int16? = nil, doneColor: Color = .success, titleColor: Color = .white) async { // until() need return true when things already done.
+        let frame = ["-", "\\", "|", "/"]
+        var nowFrame = 0
+        if let x=x, let y=y {
+            moveTo(x: x, y: y)
+        }
+        Text("  \(title)", color: titleColor, nextLine: false)
+        var isTaskComplete = false
+        Task {
+            await until()
+            isTaskComplete = true
+        }
+        while !isTaskComplete {
+            Text(frame[nowFrame], x: 0, y: nowY, color: .info, nextLine: false)
+            nowFrame = (nowFrame+1)%4
+            try? await Task.sleep(nanoseconds: 500_000_000)
+        }
+        Text(String(repeating: " ", count: getWidth(title)+2), x: 0, y: nowY, nextLine: false)
+        Text(done, x: 0, y: nowY, color: doneColor)
     }
 }

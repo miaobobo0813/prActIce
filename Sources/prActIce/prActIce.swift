@@ -1,10 +1,11 @@
 // prActIce.swift
 
 import Foundation
+import WinSDK
 
 @main
 struct prActIce {
-    static func main() {
+    static func main() async {
         let practiceStore = Persistance<[question]>(filename: "practice.json")
         let practiceList: [question] = practiceStore.read() ?? []
         let tui = SwiftTUI.shared
@@ -31,10 +32,35 @@ struct prActIce {
                 default:
                     sub = .Math
                 }
-                tui.Text("学科：\(subjects[choiceSub])", color: .title)
+                tui.Text("学科：\(subjects[choiceSub])", color: .info)
                 var sum = tui.TextField("题量")
                 tui.clean()
-                tui.Text("题量：\(sum)")
+                tui.Text("学科：\(subjects[choiceSub])", color: .info)
+                tui.Text("题量：\(sum)", color: .info)
+                var ques: String = ""
+                var ans: String = ""
+                await tui.LoadingSpinner(title: "正在生成...", done: "✓ 完成", until: {
+                    try? await Task.sleep(nanoseconds: 2000_000_000_0)
+                    ques = "1+1=?"
+                    ans = "2"
+                    return
+                })
+                tui.Text("题目：\(ques)")
+                let userAns = tui.TextField("你的答案")
+                var isCorrect = false
+                await tui.LoadingSpinner(title: "正在批改...", done: "批改完成", until: {
+                    try? await Task.sleep(nanoseconds: 2000_000_000_0)
+                    if userAns == ans {
+                        isCorrect = true
+                    }
+                    return
+                }, doneColor: .info)
+                if isCorrect {
+                    tui.Text("✓ 正确", color: .success)
+                } else {
+                    tui.Text("✕ 错误 ", color: .error, nextLine: false)
+                    tui.Text("已加入错题本！", color: .info)
+                }
                 tui.Text("按下任意键继续...")
                 tui.waitKey()
             case 1:
