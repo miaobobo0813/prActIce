@@ -2,7 +2,7 @@
 
 import Foundation
 
-enum subject: Codable {
+enum Subject: Codable {
     case Chinese
     case Math
     case English
@@ -10,15 +10,11 @@ enum subject: Codable {
     case Social
 }
 
-struct question: Codable, Identifiable {
+struct Question: Codable, Identifiable {
     var id = UUID()
 
     var question: String
-    var correctAnswer: String
+    var isWrong: Bool
     var userAnswer: String
-    var subject: subject
-
-    func isWrong() -> Bool {
-        return !(self.correctAnswer == self.userAnswer)
-    }
+    var subject: Subject
 }
