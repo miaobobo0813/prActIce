@@ -271,8 +271,8 @@ class SwiftTUI {
         Text(title, color: .title)
         Text("")
 
-        for item in items {
-            if item == items[0]{
+        for (index, item) in items.enumerated() {
+            if index == 0 {
                 Text(item, color: .cyan)
             } else {
                 Text(item)
@@ -323,7 +323,7 @@ class SwiftTUI {
         GetConsoleMode(hStdin, &mode)
         mode &= ~DWORD(ENABLE_LINE_INPUT | ENABLE_ECHO_INPUT)
         SetConsoleMode(hStdin, mode)
-        Text(String(repeating: " ", count: getWidth(input)), x: 0, y: nowY, nextLine: false)
+        Text(String(repeating: " ", count: getWidth(input)+getWidth(title)+3), x: 0, y: nowY, nextLine: false)
         moveTo(x: 0, y: nowY+1)
         Text("       ", x: 0, y: nowY, nextLine: false)
         moveTo(x: 0, y: nowY-1)
