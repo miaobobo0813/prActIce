@@ -192,7 +192,17 @@ struct prActIce {
                 practiceStore.save(practiceList)
                 return
             case 3:
-                practiceStore.save([])
+                tui.Text("你真的要清空练习册吗？", color: .title)
+                tui.Text("完整输入下方文字以继续。")
+                let agree = "Yes, I want to clean my practice book."
+                tui.Text(agree, color: .error)
+                let check = tui.TextField("输入")
+                if check == agree {
+                    practiceStore.save([])
+                    tui.Text("清空完成。", color: .success)
+                } else {
+                    tui.Text("输入有偏差。不会清空练习册。", color: .error)
+                }
                 return 
             default:
                 return
