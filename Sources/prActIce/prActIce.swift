@@ -53,7 +53,7 @@ struct prActIce {
                 }
                 var units: [String] = []
                 if let unitDict = unitDic[grade]?[sub] {
-                    for (_, unitName) in unitDict {
+                    for (_, unitName) in unitDict.sorted(by: { $0.key < $1.key }) {
                         units.append(unitName)
                     }
                 }
@@ -79,7 +79,7 @@ struct prActIce {
                 var ans: String = ""
                 for i in 1...sum {
                     await tui.LoadingSpinner(title: "正在生成(\(i)/\(sum))...", done: "✓ 生成完成(\(i)/\(sum))", until: {
-                        try? await Task.sleep(nanoseconds: 2000_000_000_0)
+                        try? await Task.sleep(nanoseconds: 2000_000_000)
                         ques = "1+1=?"
                         ans = "2"
                         return
@@ -88,7 +88,7 @@ struct prActIce {
                     let userAns = tui.TextField("你的答案")
                     var isCorrect = false
                     await tui.LoadingSpinner(title: "正在批改...", done: "批改完成", until: {
-                        try? await Task.sleep(nanoseconds: 5000_000_000)
+                        try? await Task.sleep(nanoseconds: 5000_000_00)
                         if userAns == ans {
                             isCorrect = true
                         }
