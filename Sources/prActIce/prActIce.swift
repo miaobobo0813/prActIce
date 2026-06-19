@@ -52,11 +52,13 @@ struct prActIce {
                     grade = .A7
                 }
                 var units: [String] = []
-                if let unitDict = unitDic[grade]?[sub] {
-                    for (_, unitName) in unitDict.sorted(by: { $0.key < $1.key }) {
-                        units.append(unitName)
+                await tui.LoadingSpinner(title: "正在加载...", done: "✓ 加载完成", until: {
+                    if let unitDict = unitDic[grade]?[sub] {
+                        for (_, unitName) in unitDict.sorted(by: { $0.key < $1.key }) {
+                            units.append(unitName)
+                        }
                     }
-                }
+                })
                 let unit = tui.List(units, title: "选择单元")
                 tui.Text("学科：\(subjects[choiceSub])", color: .info)
                 tui.Text("年级：\(grades[choiceGrade])", color: .info)
