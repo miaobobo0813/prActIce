@@ -73,8 +73,6 @@ struct prActIce {
                     }
                 }
                 tui.clean()
-                tui.Text("学科：\(subjects[choiceSub])", color: .info)
-                tui.Text("题量：\(sum)", color: .info)
                 var ques: String = ""
                 var ans: String = ""
                 for i in 1...sum {
