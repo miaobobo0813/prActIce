@@ -10,7 +10,7 @@ struct prActIce {
         var practiceList: [Question] = practiceStore.read() ?? []
         let tui = SwiftTUI.shared
         while true {
-            let options = ["做题", "回顾", "退出"]
+            let options = ["做题", "回顾", "退出", "清空练习册并退出(危险)"]
             let choice = tui.List(options, title: "欢迎来到prActIce。选择一个选项以继续。")
 
             switch choice {
@@ -191,6 +191,9 @@ struct prActIce {
             case 2:
                 practiceStore.save(practiceList)
                 return
+            case 3:
+                practiceStore.save([])
+                return 
             default:
                 return
             }
