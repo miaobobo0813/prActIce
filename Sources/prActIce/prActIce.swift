@@ -15,7 +15,7 @@ struct prActIce {
 
             switch choice {
             case 0:
-                let subjects = ["语文", "数学", "英语", "科学", "社会"]
+                let subjects = ["语文", "数学", "英语", "科学", "历史", "道德与法治", "地理"]
                 let choiceSub = tui.List(subjects, title: "选择学科")
                 var sub: Subject
                 switch choiceSub {
@@ -28,11 +28,39 @@ struct prActIce {
                 case 3:
                     sub = .Science
                 case 4:
-                    sub = .Social
+                    sub = .History
+                case 5:
+                    sub = .EthicsAndTheRuleOfLaw
+                case 6:
+                    sub = .Geography
                 default:
                     sub = .Math
                 }
+                let grades = ["七年级上册", "七年级下册", "八年级上册", "八年级下册"]
+                let choiceGrade = tui.List(grades, title: "选择年级")
+                var grade: Grade
+                switch choiceGrade {
+                case 0:
+                    grade = .A7
+                case 1:
+                    grade = .B7
+                case 2:
+                    grade = .A8
+                case 3:
+                    grade = .B8
+                default:
+                    grade = .A7
+                }
+                var units: [String] = []
+                if let unitDict = unitDic[grade]?[sub] {
+                    for (_, unitName) in unitDict {
+                        units.append(unitName)
+                    }
+                }
+                let unit = tui.List(units, title: "选择单元")
                 tui.Text("学科：\(subjects[choiceSub])", color: .info)
+                tui.Text("年级：\(grades[choiceGrade])", color: .info)
+                tui.Text("单元：\(units[unit])", color: .info)
                 var sum = 1
                 var input = ""
                 while true {
@@ -72,7 +100,8 @@ struct prActIce {
                         tui.Text("✕ 错误 ", color: .error, nextLine: false)
                         tui.Text("已加入错题本！", color: .info)
                     }
-                    practiceList.append(Question(question: ques, isWrong: !isCorrect, userAnswer: userAns, subject: sub))
+                    practiceList.append(Question(question: ques, isWrong: !isCorrect, userAnswer: userAns, unit: Unit(grade: grade, subject: sub, unit: unit+1)))
+                    practiceStore.save(practiceList)
                 }
                 tui.Text("按下任意键以回到开始页面...")
                 tui.waitKey()
@@ -83,17 +112,21 @@ struct prActIce {
                     while isBack {
                         var showPracticeList: [String] = []
                         for ques in practiceList {
-                            switch ques.subject {
+                            switch ques.unit.subject {
                             case .Chinese:
-                                showPracticeList.append("语文 \(ques.question) \(ques.isWrong ? "在错题本中" : "")")
+                                showPracticeList.append("语文 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "在错题本中" : "")")
                             case .Math:
-                                showPracticeList.append("数学 \(ques.question) \(ques.isWrong ? "在错题本中" : "")")
+                                showPracticeList.append("数学 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "在错题本中" : "")")
                             case .English:
-                                showPracticeList.append("英语 \(ques.question) \(ques.isWrong ? "在错题本中" : "")")
+                                showPracticeList.append("英语 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "在错题本中" : "")")
                             case .Science:
-                                showPracticeList.append("科学 \(ques.question) \(ques.isWrong ? "在错题本中" : "")")
-                            case .Social:
-                                showPracticeList.append("社会 \(ques.question) \(ques.isWrong ? "在错题本中" : "")")
+                                showPracticeList.append("科学 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "在错题本中" : "")")
+                            case .History:
+                                showPracticeList.append("历史 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "在错题本中" : "")")
+                            case .EthicsAndTheRuleOfLaw:
+                                showPracticeList.append("道德与法治 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "在错题本中" : "")")
+                            case .Geography:
+                                showPracticeList.append("地理 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "在错题本中" : "")")
                             }
                         }
                         let select = tui.List(showPracticeList, title: "选择要回顾的题目")
@@ -115,6 +148,7 @@ struct prActIce {
                                     tui.Text("✓ 正确", color: .success)
                                     tui.Text("错题被击败", color: .info)
                                     practiceList[select].isWrong = false
+                                    practiceStore.save(practiceList)
                                 } else {
                                     tui.Text("✕ 错误", color: .error)
                                     tui.Text("攻击失败", color: .info)
@@ -153,6 +187,7 @@ struct prActIce {
                 tui.Text("按下任意键继续...")
                 tui.waitKey()
             case 2:
+                practiceStore.save(practiceList)
                 return
             default:
                 return
