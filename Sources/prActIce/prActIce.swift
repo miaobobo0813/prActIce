@@ -111,24 +111,26 @@ struct prActIce {
                     var isBack = true
                     while isBack {
                         var showPracticeList: [String] = []
-                        for ques in practiceList {
-                            switch ques.unit.subject {
-                            case .Chinese:
-                                showPracticeList.append("语文 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "在错题本中" : "")")
-                            case .Math:
-                                showPracticeList.append("数学 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "在错题本中" : "")")
-                            case .English:
-                                showPracticeList.append("英语 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "在错题本中" : "")")
-                            case .Science:
-                                showPracticeList.append("科学 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "在错题本中" : "")")
-                            case .History:
-                                showPracticeList.append("历史 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "在错题本中" : "")")
-                            case .EthicsAndTheRuleOfLaw:
-                                showPracticeList.append("道德与法治 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "在错题本中" : "")")
-                            case .Geography:
-                                showPracticeList.append("地理 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "在错题本中" : "")")
+                        await tui.LoadingSpinner(title: "正在加载...", done: "✓ 加载完成", until: {
+                            for ques in practiceList {
+                                switch ques.unit.subject {
+                                case .Chinese:
+                                    showPracticeList.append("语文 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "     ! 在错题本中" : "")")
+                                case .Math:
+                                    showPracticeList.append("数学 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "     ! 在错题本中" : "")")
+                                case .English:
+                                    showPracticeList.append("英语 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "     ! 在错题本中" : "")")
+                                case .Science:
+                                    showPracticeList.append("科学 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "     ! 在错题本中" : "")")
+                                case .History:
+                                    showPracticeList.append("历史 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "     ! 在错题本中" : "")")
+                                case .EthicsAndTheRuleOfLaw:
+                                    showPracticeList.append("道德与法治 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "     ! 在错题本中" : "")")
+                                case .Geography:
+                                    showPracticeList.append("地理 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "     ! 在错题本中" : "")")
+                                }
                             }
-                        }
+                        })
                         let select = tui.List(showPracticeList, title: "选择要回顾的题目")
                         if practiceList[select].isWrong {
                             let option = tui.List(["攻击错题！", "我真的不会啊...", "返回列表", "回到开始页面"], title: "\(practiceList[select].question) ✕ 在错题本中")
@@ -184,7 +186,7 @@ struct prActIce {
                 } else {
                     tui.Text("练习册中还没有任何题目。前往开始页面选择“做题”来开始练习。")
                 }
-                tui.Text("按下任意键继续...")
+                tui.Text("按下任意键以回到开始页面...")
                 tui.waitKey()
             case 2:
                 practiceStore.save(practiceList)
