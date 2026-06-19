@@ -16,41 +16,13 @@ struct prActIce {
             switch choice {
             case 0:
                 let subjects = ["语文", "数学", "英语", "科学", "历史", "道德与法治", "地理"]
+                let transSubjects: [Subject] = [.Chinese, .Math, .English, .Science, .History, .EthicsAndTheRuleOfLaw, .Geography]
                 let choiceSub = tui.List(subjects, title: "选择学科")
-                var sub: Subject
-                switch choiceSub {
-                case 0:
-                    sub = .Chinese
-                case 1:
-                    sub = .Math
-                case 2:
-                    sub = .English
-                case 3:
-                    sub = .Science
-                case 4:
-                    sub = .History
-                case 5:
-                    sub = .EthicsAndTheRuleOfLaw
-                case 6:
-                    sub = .Geography
-                default:
-                    sub = .Math
-                }
+                let sub = transSubjects[choiceSub]
                 let grades = ["七年级上册", "七年级下册", "八年级上册", "八年级下册"]
+                let transGrades: [Grade] = [.A7, .B7, .A8, .B8]
                 let choiceGrade = tui.List(grades, title: "选择年级")
-                var grade: Grade
-                switch choiceGrade {
-                case 0:
-                    grade = .A7
-                case 1:
-                    grade = .B7
-                case 2:
-                    grade = .A8
-                case 3:
-                    grade = .B8
-                default:
-                    grade = .A7
-                }
+                let grade = transGrades[choiceGrade]
                 var units: [String] = []
                 await tui.LoadingSpinner(title: "正在加载...", done: "✓ 加载完成", until: {
                     if let unitDict = unitDic[grade]?[sub] {
@@ -60,9 +32,14 @@ struct prActIce {
                     }
                 })
                 let unit = tui.List(units, title: "选择单元")
+                let types = ["选择/判断", "填空", "解答/综合"]
+                let transTypes: [quesType] = [.choose, .fillBlank, .answer]
+                let typeChoice = tui.List(types, title: "选择题型")
+                let type = transTypes[typeChoice]
                 tui.Text("学科：\(subjects[choiceSub])", color: .info)
                 tui.Text("年级：\(grades[choiceGrade])", color: .info)
                 tui.Text("单元：\(units[unit])", color: .info)
+                tui.Text("题型：\(types[typeChoice])", color: .info)
                 var sum = 1
                 var input = ""
                 while true {
@@ -100,7 +77,7 @@ struct prActIce {
                         tui.Text("✕ 错误 ", color: .error, nextLine: false)
                         tui.Text("已加入错题本！", color: .info)
                     }
-                    practiceList.append(Question(question: ques, isWrong: !isCorrect, userAnswer: userAns, unit: Unit(grade: grade, subject: sub, unit: unit+1)))
+                    practiceList.append(Question(question: ques, isWrong: !isCorrect, userAnswer: userAns, unit: Unit(grade: grade, subject: sub, unit: unit+1), type: type))
                     practiceStore.save(practiceList)
                 }
                 tui.Text("按下任意键以回到开始页面...")

@@ -43,6 +43,7 @@ struct Question: Codable, Identifiable {
     var isWrong: Bool
     var userAnswer: String
     var unit: Unit
+    var type: quesType
 }
 
 let unitDic: [Grade: [Subject: [Int: String]]] = [
