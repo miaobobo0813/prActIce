@@ -90,22 +90,7 @@ struct prActIce {
                         var showPracticeList: [String] = []
                         await tui.LoadingSpinner(title: "正在加载...", done: "✓ 加载完成", until: {
                             for ques in practiceList {
-                                switch ques.unit.subject {
-                                case .Chinese:
-                                    showPracticeList.append("语文 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "     ! 在错题本中" : "")")
-                                case .Math:
-                                    showPracticeList.append("数学 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "     ! 在错题本中" : "")")
-                                case .English:
-                                    showPracticeList.append("英语 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "     ! 在错题本中" : "")")
-                                case .Science:
-                                    showPracticeList.append("科学 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "     ! 在错题本中" : "")")
-                                case .History:
-                                    showPracticeList.append("历史 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "     ! 在错题本中" : "")")
-                                case .EthicsAndTheRuleOfLaw:
-                                    showPracticeList.append("道德与法治 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "     ! 在错题本中" : "")")
-                                case .Geography:
-                                    showPracticeList.append("地理 \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "第\(ques.unit.unit)单元") \(ques.isWrong ? "     ! 在错题本中" : "")")
-                                }
+                                showPracticeList.append("\(transSubject[ques.unit.subject] ?? "无法加载学科") \(unitDic[ques.unit.grade]?[ques.unit.subject]?[ques.unit.unit] ?? "无法加载单元名称") \(ques.isWrong ? "     ! 在错题本中" : "")")
                             }
                         })
                         let select = tui.List(showPracticeList, title: "选择要回顾的题目")

@@ -46,6 +46,16 @@ struct Question: Codable, Identifiable {
     var type: quesType
 }
 
+let transSubject: [Subject: String] = [
+    .Chinese: "语文", 
+    .Math: "数学", 
+    .English: "英语", 
+    .Science: "科学", 
+    .History: "历史", 
+    .EthicsAndTheRuleOfLaw: "道德与法治", 
+    .Geography: "地理"
+]
+
 let unitDic: [Grade: [Subject: [Int: String]]] = [
     .A7: [
         .Chinese: [
