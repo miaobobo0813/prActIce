@@ -51,22 +51,17 @@ struct prActIce {
                 }
                 tui.clean()
                 var ques: String = ""
-                var ans: String = ""
                 for i in 1...sum {
                     await tui.LoadingSpinner(title: "正在生成(\(i)/\(sum))...", done: "✓ 生成完成(\(i)/\(sum))", until: {
-                        try? await Task.sleep(nanoseconds: 2000_000_000)
-                        ques = "1+1=?"
-                        ans = "2"
+                        ques = await getQues(subject: sub, unit: Unit(grade: grade, subject: sub, unit: unit+1), type: type)
                         return
                     })
                     tui.Text("题目：\(ques)")
                     let userAns = tui.TextField("你的答案")
                     var isCorrect = false
+                    let ques = Question(question: ques, isWrong: !isCorrect, userAnswer: userAns, unit: Unit(grade: grade, subject: sub, unit: unit+1), type: type)
                     await tui.LoadingSpinner(title: "正在批改...", done: "批改完成", until: {
-                        try? await Task.sleep(nanoseconds: 5000_000_00)
-                        if userAns == ans {
-                            isCorrect = true
-                        }
+                        isCorrect = await gradeQues(ques: ques, answer: userAns)
                         return
                     }, doneColor: .info)
                     if isCorrect {
@@ -75,7 +70,7 @@ struct prActIce {
                         tui.Text("✕ 错误 ", color: .error, nextLine: false)
                         tui.Text("已加入错题本！", color: .info)
                     }
-                    practiceList.append(Question(question: ques, isWrong: !isCorrect, userAnswer: userAns, unit: Unit(grade: grade, subject: sub, unit: unit+1), type: type))
+                    practiceList.append(ques)
                     practiceStore.save(practiceList)
                 }
                 tui.Text("按下任意键以回到开始页面...")
@@ -100,10 +95,7 @@ struct prActIce {
                                 let ans = tui.TextField("订正")
                                 var isCorrect = false
                                 await tui.LoadingSpinner(title: "正在批改...", done: "批改完成", until: {
-                                    try? await Task.sleep(nanoseconds: 5000_000_000)
-                                    if ans == "2" {
-                                        isCorrect = true
-                                    }
+                                    isCorrect = await gradeQues(ques: practiceList[select], answer: ans)
                                     return
                                 }, doneColor: .info)
                                 if isCorrect {
@@ -114,6 +106,8 @@ struct prActIce {
                                 } else {
                                     tui.Text("✕ 错误", color: .error)
                                     tui.Text("攻击失败", color: .info)
+                                    practiceList[select].userAnswer = ans
+                                    practiceStore.save(practiceList)
                                 }
                                 isBack = false
                             case 1:
@@ -168,6 +162,19 @@ struct prActIce {
                 return
             }
         }
-        
+    }
+
+    static func gradeQues(ques: Question, answer: String) async -> Bool {
+        try? await Task.sleep(nanoseconds: 5000_000_00)
+        if answer == "2" {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    static func getQues(subject: Subject, unit: Unit, type: quesType) async -> String {
+        try? await Task.sleep(nanoseconds: 2000_000_000)
+        return "1+1=?"
     }
 }
