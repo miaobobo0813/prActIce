@@ -73,7 +73,7 @@ struct prActIce {
                     practiceList.append(ques)
                     practiceStore.save(practiceList)
                 }
-                tui.Text("按下任意键以回到开始页面...")
+                tui.Text("按下任意键以回到开始页面...", color: .info)
                 tui.waitKey()
             case 1:
                 tui.Text("回顾", color: .title)
@@ -117,7 +117,12 @@ struct prActIce {
                                 tui.Text(promise, color: .error)
                                 let check = tui.TextField("输入", titleColor: .warning)
                                 if check == promise {
-                                    tui.Text("正确答案是： 2")
+                                    var showAnswer = ""
+                                    await tui.LoadingSpinner(title: "正在生成...", done: "正确答案", until: {
+                                        showAnswer = await getAnswer(ques: practiceList[select])
+                                        return
+                                    }, doneColor: .title)
+                                    tui.Text(showAnswer)
                                 } else {
                                     tui.Text("输入有偏差。不会显示答案。", color: .error)
                                 }
@@ -138,9 +143,9 @@ struct prActIce {
                         }
                     }
                 } else {
-                    tui.Text("练习册中还没有任何题目。前往开始页面选择“做题”来开始练习。")
+                    tui.Text("练习册中还没有任何题目。前往开始页面选择“做题”来开始练习。", color: .info)
                 }
-                tui.Text("按下任意键以回到开始页面...")
+                tui.Text("按下任意键以回到开始页面...", color: .info)
                 tui.waitKey()
             case 2:
                 practiceStore.save(practiceList)
@@ -174,7 +179,11 @@ struct prActIce {
     }
 
     static func getQues(subject: Subject, unit: Unit, type: quesType) async -> String {
-        try? await Task.sleep(nanoseconds: 2000_000_000)
+        try? await Task.sleep(nanoseconds: 1000_000_000)
         return "1+1=?"
+    }
+
+    static func getAnswer(ques: Question) async -> String {
+        return "2"
     }
 }

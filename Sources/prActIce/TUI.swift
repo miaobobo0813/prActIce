@@ -329,7 +329,7 @@ class SwiftTUI {
         moveTo(x: 0, y: nowY-1)
         return input
     }
-    public func LoadingSpinner(title: String = "正在处理，请等待...", done: String = "✓ 已完成", until: @escaping () async -> Void, x: Int16? = nil, y: Int16? = nil, doneColor: Color = .success, titleColor: Color = .white) async { // until() need return true when things already done.
+    public func LoadingSpinner(title: String = "正在处理，请等待...", done: String = "✓ 已完成", until: @escaping () async -> Void, x: Int16? = nil, y: Int16? = nil, doneColor: Color = .success, titleColor: Color = .white) async {
         let frame = ["-", "\\", "|", "/"]
         var nowFrame = 0
         if let x=x, let y=y {
