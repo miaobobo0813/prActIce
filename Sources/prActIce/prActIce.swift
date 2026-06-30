@@ -25,11 +25,9 @@ struct prActIce {
                 let grade = transGrades[choiceGrade]
                 var units: [String] = []
                 await tui.LoadingSpinner(title: "正在加载...", done: "✓ 加载完成", until: {
-                    if let unitDict = unitDic[grade]?[sub] {
-                        for (_, unitName) in unitDict.sorted(by: { $0.key < $1.key }) {
-                            units.append(unitName)
-                        }
-                    }
+                    units = unitDic[grade]?[sub]?
+                        .sorted(by: { $0.key < $1.key })
+                        .map { $0.value } ?? []
                 })
                 let unit = tui.List(units, title: "选择单元")
                 let types = ["选择/判断", "填空", "解答/综合"]
