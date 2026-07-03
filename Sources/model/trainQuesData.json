@@ -1,0 +1,72 @@
+[
+    {
+        "subject": "Math",
+        "grade": "A7", 
+        "unit": "第1章 有理数", 
+        "type": "choose", 
+        "output": "计算：1+(-2)-(-10)=_▲_\\nA. 7   B. 8   C. 9   D. 10"
+    }, 
+    {
+        "subject": "Chinese", 
+        "grade": "A7", 
+        "unit": "第一单元", 
+        "type": "fillBlank", 
+        "output": "根据积累填空：\\n在《秋词（其一）》中，刘禹锡借_▲_，_▲_，体现秋天明丽的特点，抒发_▲_的情感。"
+    }, 
+    {
+        "subject": "History", 
+        "grade": "A7", 
+        "unit": "第三单元 秦汉时期：统一多民族封建国家的建立和巩固", 
+        "type": "choose", 
+        "output": "汉武帝采纳主父偃的建议，颁布“推恩令”，规定诸侯王的封国和土地由子弟共同继承。这一措施的根本目的是_▲_。\\nA. 延续分封制度，巩固宗法血缘\\nB. 分化诸侯国势力，加强中央集权\\nC. 实行盐铁专营，增加国家财政\\nD. 增加地方官员，提高行政效率"
+    }, 
+    {
+        "subject": "Math", 
+        "grade": "A7", 
+        "unit": "第5章 一元一次方程", 
+        "type": "answer", 
+        "output": "解一元一次方程：10x+15=-3x-2+3(x-5)。(无需写出过程)"
+    }, 
+    {
+        "subject": "Science", 
+        "grade": "A7", 
+        "unit": "第1章 探索自然的科学", 
+        "type": "choose", 
+        "output": "熄灭酒精灯时，可以用嘴吹灭。(T/F)"
+    }, 
+    {
+        "subject": "Math", 
+        "grade": "B7", 
+        "unit": "第5章 分式", 
+        "type": "choose", 
+        "output": "下列选项中，是分式的是_▲_。\\nA. (12+x)/√(2)\\nB. 12/x\\nC. x+√(2)\\nD. x(1/x)"
+    }, 
+    {
+        "subject": "Science", 
+        "grade": "B7", 
+        "unit": "第1章 生物的结构与生殖", 
+        "type": "answer", 
+        "output": "细菌和真菌虽然名字里都有“菌”，但它们是不一样的微生物。这两者的主要区别是_▲_。"
+    }, 
+    {
+        "subject": "History", 
+        "grade": "B7", 
+        "unit": "第一单元 隋唐时期：繁荣与开放的时代", 
+        "type": "answer", 
+        "output": "材料一\\n隋唐大运河以洛阳为中心，北达涿郡，南及余杭，全长两千多公里，是我国古代最长的运河。它的开通，连接了_▲_、_▲_、_▲_等五大水系，大大便利了南北交通运输。\\n材料二\\n尽道隋亡为此河，至今千里赖通波。若无水殿龙舟事，共禹论功不较多。（皮日休《汴河怀古》）\\n(1 本题3分) 列举材料一中缺失的三条水系。 (2 本题2分) 材料二中“为此河”指哪条河? (3 本题4分) 综合上述材料并结合所学，说明隋唐大运河开通的影响。"
+    }, 
+    {
+        "subject": "English", 
+        "grade": "B7", 
+        "unit": "Unit 1 The secrets of happiness", 
+        "type": "fillBlank", 
+        "output": "根据音标，完成句子：Sports make life _▲_/rɪtʃ/ in so many ways."
+    }, 
+    {
+        "subject": "Chinese", 
+        "grade": "B7", 
+        "unit": "第五单元", 
+        "type": "fillBlank", 
+        "output": "在《望岳》中，杜甫通过“_▲_，_▲_”表达了自己终将登上顶峰，俯瞰众山的豪情壮志。"
+    }
+]

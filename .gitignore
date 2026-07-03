@@ -8,3 +8,6 @@ DerivedData/
 .netrc
 *.vscode
 Package.resolved
+*.venv
+*Sources/model/outputGrade
+*Sources/model/outputQues
