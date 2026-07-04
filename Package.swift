@@ -9,7 +9,12 @@ let package = Package(
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .executableTarget(
-            name: "prActIce"
+            name: "prActIce", 
+            resources: [
+                .copy("../model/modelService.py"), 
+                .copy("../model/outputGrade"), 
+                .copy("../model/outputQues")
+            ]
         ),
         .testTarget(
             name: "prActIceTests",

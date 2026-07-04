@@ -6,6 +6,15 @@ import WinSDK
 @main
 struct prActIce {
     static func main() async {
+        let bundle = Bundle.module
+        let servicePath = bundle.path(forResource: "modelService", ofType: "py")!
+        let workDir = (servicePath as NSString).deletingLastPathComponent
+        let cmd = Process()
+        cmd.executableURL = URL(fileURLWithPath: "C:\\System32\\cmd.exe")
+        cmd.currentDirectoryURL = URL(fileURLWithPath: workDir)
+        cmd.arguments = ["python", servicePath]
+        try? cmd.run()
+
         let practiceStore = Persistance<[Question]>(filename: "practice.json")
         var practiceList: [Question] = practiceStore.read() ?? []
         let tui = SwiftTUI.shared
@@ -179,8 +188,11 @@ struct prActIce {
     }
 
     static func getQues(subject: Subject, unit: Unit, type: quesType) async -> String {
-        try? await Task.sleep(nanoseconds: 1000_000_000)
-        return "1+1=?"
+        let ques = await callQues(unit: unit, type: type)
+        if ques == "error." {
+            await SwiftTUI.shared.Text("出现未知错误。", color: .error)
+        }
+        return ques
     }
 
     static func getAnswer(ques: Question) async -> String {

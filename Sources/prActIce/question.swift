@@ -12,14 +12,14 @@ enum Subject: Codable {
     case Geography
 }
 
-enum Grade: Codable {
+enum Grade: String, Codable {
     case A7
     case B7
     case A8
     case B8
 }
 
-enum quesType: Codable {
+enum quesType: String, Codable {
     case choose
     case fillBlank
     case answer
@@ -272,3 +272,7 @@ let unitDic: [Grade: [Subject: [Int: String]]] = [
         ]
     ]
 ]
+
+func findUnitName(unit: Unit) -> String {
+    return unitDic[unit.grade]?[unit.subject]?[unit.unit] ?? "未知单元"
+}
