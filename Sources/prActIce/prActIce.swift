@@ -6,18 +6,38 @@ import WinSDK
 @main
 struct prActIce {
     static func main() async {
-        let bundle = Bundle.module
-        let servicePath = bundle.path(forResource: "modelService", ofType: "py")!
-        let workDir = (servicePath as NSString).deletingLastPathComponent
-        let cmd = Process()
-        cmd.executableURL = URL(fileURLWithPath: "C:\\System32\\cmd.exe")
-        cmd.currentDirectoryURL = URL(fileURLWithPath: workDir)
-        cmd.arguments = ["python", servicePath]
-        try? cmd.run()
-
         let practiceStore = Persistance<[Question]>(filename: "practice.json")
         var practiceList: [Question] = practiceStore.read() ?? []
         let tui = SwiftTUI.shared
+
+        var isError = false, errorMessage = ""
+        await tui.LoadingSpinner(title: "正在加载QGIntelligence...这可能花费数分钟...", done: "QGIntelligence加载完成。", until: {
+            Task(priority: .background) {
+                do {
+                    try await initIntelligence()
+                } catch initIntelligenceError.pythonNotFound {
+                    isError = true
+                    errorMessage = "尚未安装Python环境。运行'winget install python'以继续。"
+                } catch initIntelligenceError.pyError(message: let error) {
+                    isError = true
+                    errorMessage = "发生未知错误。以下是详细信息。\(error)"
+                } catch {
+                    isError = true
+                    errorMessage = "加载QGIntelligence时发生未知错误。"
+                }
+            }
+            do {
+                try await checkServiceStatus()
+            } catch {
+                isError = true
+                errorMessage = "加载QGIntelligence时发生未知错误。"
+            }
+        }, doneColor: .info)
+
+        if isError {
+            tui.Text(errorMessage, color: .error)
+        }
+        
         while true {
             let options = ["做题", "回顾", "退出", "清空练习册并退出(危险)"]
             let choice = tui.List(options, title: "欢迎来到prActIce。选择一个选项以继续。")
@@ -97,7 +117,7 @@ struct prActIce {
                         })
                         let select = tui.List(showPracticeList, title: "选择要回顾的题目")
                         if practiceList[select].isWrong {
-                            let option = tui.List(["攻击错题！", "我真的不会啊...", "返回列表", "回到开始页面"], title: "\(practiceList[select].question) ✕ 在错题本中")
+                            let option = tui.List(["攻击错题！", "返回列表", "回到开始页面"], title: "\(practiceList[select].question) ✕ 在错题本中")
                             switch option {
                             case 0:
                                 tui.Text(practiceList[select].question, color: .title)
@@ -120,23 +140,6 @@ struct prActIce {
                                 }
                                 isBack = false
                             case 1:
-                                let promise = "I can't do this. Please tell me the answer."
-                                tui.Text("你真的不会吗？", color: .title)
-                                tui.Text("完整输入下方的承诺以继续。")
-                                tui.Text(promise, color: .error)
-                                let check = tui.TextField("输入", titleColor: .warning)
-                                if check == promise {
-                                    var showAnswer = ""
-                                    await tui.LoadingSpinner(title: "正在生成...", done: "正确答案", until: {
-                                        showAnswer = await getAnswer(ques: practiceList[select])
-                                        return
-                                    }, doneColor: .title)
-                                    tui.Text(showAnswer)
-                                } else {
-                                    tui.Text("输入有偏差。不会显示答案。", color: .error)
-                                }
-                                isBack = false
-                            case 2:
                                 isBack = true
                             default:
                                 isBack = false
@@ -179,12 +182,7 @@ struct prActIce {
     }
 
     static func gradeQues(ques: Question, answer: String) async -> Bool {
-        try? await Task.sleep(nanoseconds: 5000_000_00)
-        if answer == "2" {
-            return true
-        } else {
-            return false
-        }
+        return await callGrade(ques: ques.question, userAns: answer)
     }
 
     static func getQues(subject: Subject, unit: Unit, type: quesType) async -> String {
@@ -193,9 +191,5 @@ struct prActIce {
             await SwiftTUI.shared.Text("出现未知错误。", color: .error)
         }
         return ques
-    }
-
-    static func getAnswer(ques: Question) async -> String {
-        return "2"
     }
 }
