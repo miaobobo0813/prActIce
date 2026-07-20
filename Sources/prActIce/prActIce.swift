@@ -88,9 +88,9 @@ struct prActIce {
                     tui.Text("题目：\(ques)")
                     let userAns = tui.TextField("你的答案")
                     var isCorrect = false
-                    let ques = Question(question: ques, isWrong: !isCorrect, userAnswer: userAns, unit: Unit(grade: grade, subject: sub, unit: unit+1), type: type)
+                    let questionQues = Question(question: ques, isWrong: !isCorrect, userAnswer: userAns, unit: Unit(grade: grade, subject: sub, unit: unit+1), type: type)
                     await tui.LoadingSpinner(title: "正在批改...", done: "批改完成", until: {
-                        isCorrect = await gradeQues(ques: ques, answer: userAns)
+                        isCorrect = await gradeQues(ques: questionQues, answer: userAns)
                         return
                     }, doneColor: .info)
                     if isCorrect {
@@ -99,8 +99,12 @@ struct prActIce {
                         tui.Text("✕ 错误 ", color: .error, nextLine: false)
                         tui.Text("已加入错题本！", color: .info)
                     }
-                    practiceList.append(ques)
-                    practiceStore.save(practiceList)
+                    if questionQues.question != "发生未知错误。输入OK以继续" {
+                        tui.Text("由于发生未知错误，将不会加入练习册。")
+                    } else {
+                        practiceList.append(questionQues)
+                        practiceStore.save(practiceList)
+                    }
                 }
                 tui.Text("按下任意键以回到开始页面...", color: .info)
                 tui.waitKey()
@@ -163,7 +167,7 @@ struct prActIce {
                 practiceStore.save(practiceList)
                 return
             case 3:
-                tui.Text("你真的要清空练习册吗？", color: .title)
+                tui.Text("危险！此操作不可撤销。", color: .title)
                 tui.Text("完整输入下方文字以继续。")
                 let agree = "Yes, I want to clean my practice book."
                 tui.Text(agree, color: .error)
