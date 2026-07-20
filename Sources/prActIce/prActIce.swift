@@ -14,11 +14,11 @@ struct prActIce {
         await tui.LoadingSpinner(title: "正在加载QGIntelligence...这可能花费数分钟...", done: "QGIntelligence加载完成。", until: {
             Task(priority: .background) {
                 do {
-                    try await initIntelligence()
-                } catch initIntelligenceError.pythonNotFound {
+                    try await InitIntelligence()
+                } catch InitIntelligenceError.pythonNotFound {
                     isError = true
                     errorMessage = "尚未安装Python环境。运行'winget install python'以继续。"
-                } catch initIntelligenceError.pyError(message: let error) {
+                } catch InitIntelligenceError.pyError(message: let error) {
                     isError = true
                     errorMessage = "发生未知错误。以下是详细信息。\(error)"
                 } catch {
@@ -182,14 +182,14 @@ struct prActIce {
     }
 
     static func gradeQues(ques: Question, answer: String) async -> Bool {
-        return await callGrade(ques: ques.question, userAns: answer)
+        if ques.question == "发生未知错误。输入OK以继续。" && answer == "OK" {
+            return true
+        }
+        return await CallGrade(ques: ques.question, userAns: answer)
     }
 
     static func getQues(subject: Subject, unit: Unit, type: quesType) async -> String {
-        let ques = await callQues(unit: unit, type: type)
-        if ques == "error." {
-            await SwiftTUI.shared.Text("出现未知错误。", color: .error)
-        }
+        let ques = await CallQues(unit: unit, type: type)
         return ques
     }
 }

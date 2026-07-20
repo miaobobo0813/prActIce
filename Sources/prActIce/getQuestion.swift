@@ -4,13 +4,15 @@ import WinSDK
 import Foundation
 import FoundationNetworking
 
-enum initIntelligenceError: Error {
+enum InitIntelligenceError: Error {
     case pythonNotFound
     case unknownError
     case pyError(message: String)
 }
 
-func callQues(unit: Unit, type: quesType) async -> String {
+func CallQues(unit: Unit, type: quesType) async -> String {
+    let errorResult = "发生未知错误。输入OK以继续。"
+
     var components = URLComponents()
     components.scheme = "http"
     components.host = "127.0.0.1"
@@ -24,26 +26,26 @@ func callQues(unit: Unit, type: quesType) async -> String {
     ]
 
     guard let httpURL = components.url else {
-        return "error."
+        return errorResult
     }
 
     do {
         let (data, response) = try await URLSession.shared.data(from: httpURL)
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            return "error."
+            return errorResult
         }
         if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
            let text = json["text"] as? String {
             return text
         }
     } catch {
-        return "error."
+        return errorResult
     }
 
-    return "error."
+    return errorResult
 }
 
-func callGrade(ques: String, userAns: String) async -> Bool {
+func CallGrade(ques: String, userAns: String) async -> Bool {
     var components = URLComponents()
     components.scheme = "http"
     components.host = "127.0.0.1"
@@ -74,16 +76,16 @@ func callGrade(ques: String, userAns: String) async -> Bool {
     return false
 }
 
-func initIntelligence() async throws {
+func InitIntelligence() async throws {
     try await Task.detached {
         let bundle = Bundle.module
         guard let servicePath = bundle.path(forResource: "modelService", ofType: "py"),
               let modelQuesPath = bundle.path(forResource: "outputQues", ofType: nil),
               let modelGradePath = bundle.path(forResource: "outputGrade", ofType: nil) else {
-            throw initIntelligenceError.unknownError
+            throw InitIntelligenceError.unknownError
         }
 
-        guard let sysRoot = ProcessInfo.processInfo.environment["SystemRoot"] else { throw initIntelligenceError.unknownError }
+        guard let sysRoot = ProcessInfo.processInfo.environment["SystemRoot"] else { throw InitIntelligenceError.unknownError }
         let whereProcess = Process()
         whereProcess.executableURL = URL(fileURLWithPath: "\(sysRoot)\\System32\\where.exe")
         whereProcess.arguments = ["python"]
@@ -94,14 +96,14 @@ func initIntelligence() async throws {
             try whereProcess.run()
             whereProcess.waitUntilExit()
         } catch {
-            throw initIntelligenceError.unknownError
+            throw InitIntelligenceError.unknownError
         }
         if whereProcess.terminationStatus != 0 {
-            throw initIntelligenceError.pythonNotFound
+            throw InitIntelligenceError.pythonNotFound
         }
         let data = pyPath.fileHandleForReading.readDataToEndOfFile()
         guard let pyPathString = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines) else {
-            throw initIntelligenceError.unknownError
+            throw InitIntelligenceError.unknownError
         }
 
         let pyProcess = Process()
@@ -113,7 +115,7 @@ func initIntelligence() async throws {
         do {
             try pyProcess.run()
         } catch {
-            throw initIntelligenceError.unknownError
+            throw InitIntelligenceError.unknownError
         }
     }.value
 }
@@ -141,6 +143,6 @@ func checkServiceStatus() async throws {
         try await Task.sleep(nanoseconds: 500_000_000)
     }
 
-    throw initIntelligenceError.unknownError
+    throw InitIntelligenceError.unknownError
 }
  
