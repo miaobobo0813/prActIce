@@ -11,31 +11,36 @@ struct prActIce {
         let tui = SwiftTUI.shared
 
         var isError = false, errorMessage = ""
-        await tui.LoadingSpinner(title: "正在加载QGIntelligence...这可能花费数分钟...", done: "QGIntelligence加载完成。", until: {
+        await tui.LoadingSpinner(title: "正在加载QGIntelligence...首次加载可能花费数分钟...", done: "QGIntelligence加载完成。", until: {
             Task(priority: .background) {
                 do {
                     try await InitIntelligence()
                 } catch InitIntelligenceError.pythonNotFound {
                     isError = true
                     errorMessage = "尚未安装Python环境。运行'winget install python'以继续。"
+                    return
                 } catch InitIntelligenceError.pyError(message: let error) {
                     isError = true
-                    errorMessage = "发生未知错误。以下是详细信息。\(error)"
+                    errorMessage = "发生未知错误。以下是详细信息：\(error)"
+                    return
                 } catch {
                     isError = true
                     errorMessage = "加载QGIntelligence时发生未知错误。"
+                    return
                 }
             }
             do {
                 try await checkServiceStatus()
             } catch {
                 isError = true
-                errorMessage = "加载QGIntelligence时发生未知错误。"
+                errorMessage = "QGIntelligence服务未能启动。"
+                return
             }
         }, doneColor: .info)
 
         if isError {
             tui.Text(errorMessage, color: .error)
+            return
         }
         
         while true {
@@ -99,7 +104,7 @@ struct prActIce {
                         tui.Text("✕ 错误 ", color: .error, nextLine: false)
                         tui.Text("已加入错题本！", color: .info)
                     }
-                    if questionQues.question != "发生未知错误。输入OK以继续" {
+                    if questionQues.question == "发生未知错误。输入OK以继续" {
                         tui.Text("由于发生未知错误，将不会加入练习册。")
                     } else {
                         practiceList.append(questionQues)
