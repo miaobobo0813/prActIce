@@ -77,7 +77,7 @@ func CallGrade(ques: String, userAns: String) async -> Bool {
 }
 
 func InitIntelligence() async throws {
-    let bundle = Bundle.module
+    let bundle = Bundle.main
     guard let servicePath = bundle.path(forResource: "modelService", ofType: "py"),
             let modelQuesPath = bundle.path(forResource: "outputQues", ofType: nil),
             let modelGradePath = bundle.path(forResource: "outputGrade", ofType: nil) 
