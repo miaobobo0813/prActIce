@@ -36,6 +36,11 @@ struct prActIce {
                         ServiceStatus.shared.isError = true
                         ServiceStatus.shared.errorMessage = "QGIntelligence服务启动失败。\(message)\n这可能是因为网络引起的问题。"
                     }
+                } catch InitIntelligenceError.fileNotFound(let fileName) {
+                    await MainActor.run {
+                        ServiceStatus.shared.isError = true
+                        ServiceStatus.shared.errorMessage = "未能找到文件：\(fileName)。重新安装prActIce可能会解决此问题。"
+                    }
                 } catch {
                     await MainActor.run {
                         ServiceStatus.shared.isError = true
@@ -100,25 +105,68 @@ struct prActIce {
                 tui.clean()
                 var ques: String = ""
                 for i in 1...sum {
+                    var isError = false, errorMessage = ""
                     await tui.LoadingSpinner(title: "正在生成(\(i)/\(sum))...", done: "✓ 生成完成(\(i)/\(sum))", until: {
-                        ques = await getQues(subject: sub, unit: Unit(grade: grade, subject: sub, unit: unit+1), type: type)
+                        do {
+                            ques = try await getQues(subject: sub, unit: Unit(grade: grade, subject: sub, unit: unit+1), type: type)
+                        } catch CallError.requestFailed {
+                            isError = true
+                            errorMessage = "服务请求失败。请稍后重试。"
+                        } catch CallError.invalidURL {
+                            isError = true
+                            errorMessage = "无法配置URL。"
+                        } catch CallError.invalidResponse {
+                            isError = true
+                            errorMessage = "无效的响应。"
+                        } catch CallError.decodingFailed {
+                            isError = true
+                            errorMessage = "解码失败。这可能是因为QGIntelligence胡言乱语。"
+                        } catch {
+                            isError = true
+                            errorMessage = "未知错误：\(error.localizedDescription)"
+                        }
                         return
                     })
+                    if isError {
+                        tui.Text("由于发生未知错误，请稍后重试。详细信息：\(errorMessage)", color: .error)
+                        continue
+                    }
                     tui.Text("题目：\(ques)")
                     let userAns = tui.TextField("你的答案")
                     var isCorrect = false
-                    let questionQues = Question(question: ques, isWrong: !isCorrect, userAnswer: userAns, unit: Unit(grade: grade, subject: sub, unit: unit+1), type: type)
                     await tui.LoadingSpinner(title: "正在批改...", done: "批改完成", until: {
-                        isCorrect = await gradeQues(ques: questionQues, answer: userAns)
+                        do {
+                            isCorrect = try await gradeQues(ques: ques, answer: userAns)
+                        } catch CallError.requestFailed {
+                            isError = true
+                            errorMessage = "服务请求失败。请稍后重试。"
+                        } catch CallError.invalidURL {
+                            isError = true
+                            errorMessage = "无法配置URL。"
+                        } catch CallError.invalidResponse {
+                            isError = true
+                            errorMessage = "无效的响应。"
+                        } catch CallError.decodingFailed {
+                            isError = true
+                            errorMessage = "解码失败。这可能是因为QGIntelligence胡言乱语。"
+                        } catch {
+                            isError = true
+                            errorMessage = "未知错误：\(error.localizedDescription)"
+                        }
                         return
                     }, doneColor: .info)
+                    if isError {
+                        tui.Text("由于发生未知错误，请稍后重试。详细信息：\(errorMessage)", color: .error)
+                        continue
+                    }
+                    let questionQues = Question(question: ques, isWrong: !isCorrect, userAnswer: userAns, unit: Unit(grade: grade, subject: sub, unit: unit+1), type: type)
                     if isCorrect {
                         tui.Text("✓ 正确", color: .success)
                     } else {
                         tui.Text("✕ 错误 ", color: .error, nextLine: false)
                         tui.Text("已加入错题本！", color: .info)
                     }
-                    if questionQues.question == "发生未知错误。输入OK以继续" {
+                    if questionQues.question == "发生未知错误。输入OK以继续。" {
                         tui.Text("由于发生未知错误，将不会加入练习册。")
                     } else {
                         practiceList.append(questionQues)
@@ -146,10 +194,32 @@ struct prActIce {
                                 tui.Text(practiceList[select].question, color: .title)
                                 let ans = tui.TextField("订正")
                                 var isCorrect = false
+                                var isError = false, errorMessage = ""
                                 await tui.LoadingSpinner(title: "正在批改...", done: "批改完成", until: {
-                                    isCorrect = await gradeQues(ques: practiceList[select], answer: ans)
+                                    do {
+                                        isCorrect = try await gradeQues(ques: practiceList[select].question, answer: ans)
+                                    } catch CallError.requestFailed {
+                                        isError = true
+                                        errorMessage = "服务请求失败。请稍后重试。"
+                                    } catch CallError.invalidURL {
+                                        isError = true
+                                        errorMessage = "无法配置URL。"
+                                    } catch CallError.invalidResponse {
+                                        isError = true
+                                        errorMessage = "无效的响应。"
+                                    } catch CallError.decodingFailed {
+                                        isError = true
+                                        errorMessage = "解码失败。这可能是因为QGIntelligence胡言乱语。"
+                                    } catch {
+                                        isError = true
+                                        errorMessage = "未知错误：\(error.localizedDescription)"
+                                    }
                                     return
                                 }, doneColor: .info)
+                                if isError {
+                                    tui.Text("由于发生未知错误，请稍后重试。详细信息：\(errorMessage)", color: .error)
+                                    break
+                                }
                                 if isCorrect {
                                     tui.Text("✓ 正确", color: .success)
                                     tui.Text("错题被击败", color: .info)
@@ -204,15 +274,19 @@ struct prActIce {
         }
     }
 
-    static func gradeQues(ques: Question, answer: String) async -> Bool {
-        if ques.question == "发生未知错误。输入OK以继续。" && answer == "OK" {
-            return true
+    static func gradeQues(ques: String, answer: String) async throws -> Bool {
+        do {
+            return try await CallGrade(ques: ques, userAns: answer)
+        } catch {
+            throw error
         }
-        return await CallGrade(ques: ques.question, userAns: answer)
     }
 
-    static func getQues(subject: Subject, unit: Unit, type: quesType) async -> String {
-        let ques = await CallQues(unit: unit, type: type)
-        return ques
+    static func getQues(subject: Subject, unit: Unit, type: quesType) async throws -> String {
+        do {
+            return try await CallQues(unit: unit, type: type)
+        } catch {
+            throw error
+        }
     }
 }
