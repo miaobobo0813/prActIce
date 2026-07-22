@@ -130,6 +130,9 @@ func checkServiceStatus() async throws {
     let deadline = Date().addingTimeInterval(240)
 
     while Date() < deadline {
+        if await ServiceStatus.shared.isError {
+            return
+        }
         do {
             let (data, response) = try await URLSession.shared.data(from: healthURL)
 

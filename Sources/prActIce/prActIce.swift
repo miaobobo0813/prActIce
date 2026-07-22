@@ -2,6 +2,14 @@
 
 import Foundation
 import WinSDK
+import Observation
+
+@Observable @MainActor
+final class ServiceStatus {
+    static let shared = ServiceStatus()
+    var isError: Bool = false
+    var errorMessage: String = ""
+}
 
 @main
 struct prActIce {
@@ -9,42 +17,48 @@ struct prActIce {
         let practiceStore = Persistance<[Question]>(filename: "practice.json")
         var practiceList: [Question] = practiceStore.read() ?? []
         let tui = SwiftTUI.shared
-
-        var isError = false, errorMessage = ""
-        await tui.LoadingSpinner(title: "正在加载QGIntelligence...首次加载可能花费数分钟...", done: "QGIntelligence加载完成。", until: {
-            Task(priority: .background) {
+        await tui.LoadingSpinner(title: "正在加载QGIntelligence...这可能花费数分钟...", done: "QGIntelligence加载完成。", until: {
+            Task.detached(priority: .background) {
                 do {
                     try await InitIntelligence()
                 } catch InitIntelligenceError.pythonNotFound {
-                    isError = true
-                    errorMessage = "尚未安装Python环境。运行'winget install python'以继续。"
-                    return
-                } catch InitIntelligenceError.pyError(message: let error) {
-                    isError = true
-                    errorMessage = "发生未知错误。以下是详细信息：\(error)"
-                    return
+                    await MainActor.run {
+                        ServiceStatus.shared.isError = true
+                        ServiceStatus.shared.errorMessage = "未能找到Python。请确保已安装Python，并添加到系统PATH中。"
+                    }
+                } catch InitIntelligenceError.unknownError {
+                    await MainActor.run {
+                        ServiceStatus.shared.isError = true
+                        ServiceStatus.shared.errorMessage = "发生未知错误。请检查网络连接或稍后重试。"
+                    }
+                } catch InitIntelligenceError.pyError(let message) {
+                    await MainActor.run {
+                        ServiceStatus.shared.isError = true
+                        ServiceStatus.shared.errorMessage = "QGIntelligence服务启动失败。\(message)\n这可能是因为网络引起的问题。"
+                    }
                 } catch {
-                    isError = true
-                    errorMessage = "加载QGIntelligence时发生未知错误。"
-                    return
+                    await MainActor.run {
+                        ServiceStatus.shared.isError = true
+                        ServiceStatus.shared.errorMessage = "发生未知错误：\(error.localizedDescription)"
+                    }
                 }
             }
             do {
                 try await checkServiceStatus()
             } catch {
-                isError = true
-                errorMessage = "QGIntelligence服务未能启动。"
+                ServiceStatus.shared.isError = true
+                ServiceStatus.shared.errorMessage = "QGIntelligence服务未能启动。"
                 return
             }
         }, doneColor: .info)
 
-        if isError {
-            tui.Text(errorMessage, color: .error)
+        if ServiceStatus.shared.isError {
+            tui.Text(ServiceStatus.shared.errorMessage, color: .error)
             return
         }
         
         while true {
-            let options = ["做题", "回顾", "退出", "清空练习册并退出(危险)"]
+            let options = ["做题", "回顾", "退出(你可能需要再手动关闭窗口)", "清空练习册并退出(危险)"]
             let choice = tui.List(options, title: "欢迎来到prActIce。选择一个选项以继续。")
 
             switch choice {
