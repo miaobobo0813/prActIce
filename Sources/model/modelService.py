@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -95,6 +96,20 @@ def decode_generated_text(tokenizer, model_inputs, generated_ids) -> str:
     return tokenizer.decode(generated_ids[0, input_length:], skip_special_tokens=True).strip()
 
 
+def normalize_grade_output(raw_text: str) -> str:
+    text = raw_text.strip()
+    match = re.search(r"(\d+)\s*/\s*(\d+)", text)
+    if match:
+        earned = int(match.group(1))
+        total = int(match.group(2))
+        return f"{earned}/{total}"
+    if re.search(r"\btrue\b|\b正确\b|\b对\b", text, re.IGNORECASE):
+        return "1/1"
+    if re.search(r"\bfalse\b|\b错误\b|\b错\b", text, re.IGNORECASE):
+        return "0/1"
+    return "0/1"
+
+
 @service.get("/ques")
 async def quesAPI(grade: str, subject: str, unit: str, type: str):
     tokenizer, model = get_model_pair(is_grade_model=False)
@@ -120,14 +135,18 @@ async def gradeAPI(ques: str, userAns: str):
     tokenizer, model = get_model_pair(is_grade_model=True)
     instruction = f"问题：{ques}，学生回答：{userAns}"
     messages = [
-        {"role": "system", "content": "你是一个批改作业的老师，请用\"true\"和\"false\"批改。"},
+        {
+            "role": "system",
+            "content": "你是一个批改作业的老师。请根据题目类型进行评分：选择题和填空题每空1分，若回答正确则输出 1/1；若回答错误则输出 0/1；若题目包含多个空，请按空数给出如 2/3 或 1/3 的分数。请只输出最终评分结果，不要解释。",
+        },
         {"role": "user", "content": instruction},
     ]
     try:
         text = tokenizer.apply_chat_template(messages, tokenize=False, generation_prompt=True)
         modelInputs = tokenizer([text], return_tensors="pt").to(model.device)
         generatedIDs = model.generate(**modelInputs, max_new_tokens=512)
-        return {"text": decode_generated_text(tokenizer, modelInputs, generatedIDs)}
+        raw_text = decode_generated_text(tokenizer, modelInputs, generatedIDs)
+        return {"text": normalize_grade_output(raw_text)}
     except Exception as exc:
         raise HTTPException(status_code=500, detail=f"批改失败: {exc}") from exc
 

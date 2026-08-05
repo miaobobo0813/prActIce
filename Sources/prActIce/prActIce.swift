@@ -133,10 +133,10 @@ struct prActIce {
                     }
                     tui.Text("题目：\(ques)")
                     let userAns = tui.TextField("你的答案")
-                    var isCorrect = false
+                    var scoreResult = GradeScoreResult(scoreText: "0/1", isFullScore: false)
                     await tui.LoadingSpinner(title: "正在批改...", done: "批改完成", until: {
                         do {
-                            isCorrect = try await gradeQues(ques: ques, answer: userAns)
+                            scoreResult = try await gradeQues(ques: ques, answer: userAns)
                         } catch CallError.requestFailed {
                             isError = true
                             errorMessage = "服务请求失败。请稍后重试。"
@@ -159,11 +159,11 @@ struct prActIce {
                         tui.Text("由于发生未知错误，请稍后重试。详细信息：\(errorMessage)", color: .error)
                         continue
                     }
-                    let questionQues = Question(question: ques, isWrong: !isCorrect, userAnswer: userAns, unit: Unit(grade: grade, subject: sub, unit: unit+1), type: type)
-                    if isCorrect {
-                        tui.Text("✓ 正确", color: .success)
+                    let questionQues = Question(question: ques, isWrong: !scoreResult.isFullScore, userAnswer: userAns, unit: Unit(grade: grade, subject: sub, unit: unit+1), type: type)
+                    if scoreResult.isFullScore {
+                        tui.Text("✓ 正确（\(scoreResult.scoreText)）", color: .success)
                     } else {
-                        tui.Text("✕ 错误 ", color: .error, nextLine: false)
+                        tui.Text("✕ 错误（\(scoreResult.scoreText)）", color: .error, nextLine: false)
                         tui.Text("已加入错题本！", color: .info)
                     }
                     if questionQues.question == "发生未知错误。输入OK以继续。" {
@@ -193,11 +193,11 @@ struct prActIce {
                             case 0:
                                 tui.Text(practiceList[select].question, color: .title)
                                 let ans = tui.TextField("订正")
-                                var isCorrect = false
+                                var scoreResult = GradeScoreResult(scoreText: "0/1", isFullScore: false)
                                 var isError = false, errorMessage = ""
                                 await tui.LoadingSpinner(title: "正在批改...", done: "批改完成", until: {
                                     do {
-                                        isCorrect = try await gradeQues(ques: practiceList[select].question, answer: ans)
+                                        scoreResult = try await gradeQues(ques: practiceList[select].question, answer: ans)
                                     } catch CallError.requestFailed {
                                         isError = true
                                         errorMessage = "服务请求失败。请稍后重试。"
@@ -220,13 +220,13 @@ struct prActIce {
                                     tui.Text("由于发生未知错误，请稍后重试。详细信息：\(errorMessage)", color: .error)
                                     break
                                 }
-                                if isCorrect {
-                                    tui.Text("✓ 正确", color: .success)
+                                if scoreResult.isFullScore {
+                                    tui.Text("✓ 正确（\(scoreResult.scoreText)）", color: .success)
                                     tui.Text("错题被击败", color: .info)
                                     practiceList[select].isWrong = false
                                     practiceStore.save(practiceList)
                                 } else {
-                                    tui.Text("✕ 错误", color: .error)
+                                    tui.Text("✕ 错误（\(scoreResult.scoreText)）", color: .error)
                                     tui.Text("攻击失败", color: .info)
                                     practiceList[select].userAnswer = ans
                                     practiceStore.save(practiceList)
@@ -274,7 +274,7 @@ struct prActIce {
         }
     }
 
-    static func gradeQues(ques: String, answer: String) async throws -> Bool {
+    static func gradeQues(ques: String, answer: String) async throws -> GradeScoreResult {
         do {
             return try await CallGrade(ques: ques, userAns: answer)
         } catch {

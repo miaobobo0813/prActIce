@@ -18,6 +18,43 @@ enum CallError: Error {
     case decodingFailed
 }
 
+struct GradeScoreResult {
+    let scoreText: String
+    let isFullScore: Bool
+
+    init(scoreText: String, isFullScore: Bool) {
+        self.scoreText = scoreText
+        self.isFullScore = isFullScore
+    }
+}
+
+func parseGradeScoreText(_ text: String) -> GradeScoreResult? {
+    let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
+    let pattern = #"(?<!\d)(\d+)\s*/\s*(\d+)(?!\d)"#
+
+    if let regex = try? NSRegularExpression(pattern: pattern),
+       let match = regex.firstMatch(in: trimmedText, range: NSRange(trimmedText.startIndex..., in: trimmedText)) {
+        let earnedRange = Range(match.range(at: 1), in: trimmedText)
+        let totalRange = Range(match.range(at: 2), in: trimmedText)
+        if let earnedRange, let totalRange,
+           let earned = Int(trimmedText[earnedRange]),
+           let total = Int(trimmedText[totalRange]) {
+            let normalizedScore = "\(earned)/\(total)"
+            return GradeScoreResult(scoreText: normalizedScore, isFullScore: earned >= total)
+        }
+    }
+
+    let lowercasedText = trimmedText.lowercased()
+    if lowercasedText.contains("true") {
+        return GradeScoreResult(scoreText: "1/1", isFullScore: true)
+    }
+    if lowercasedText.contains("false") {
+        return GradeScoreResult(scoreText: "0/1", isFullScore: false)
+    }
+
+    return nil
+}
+
 func CallQues(unit: Unit, type: quesType) async throws -> String {
     var components = URLComponents()
     components.scheme = "http"
@@ -51,7 +88,7 @@ func CallQues(unit: Unit, type: quesType) async throws -> String {
     throw CallError.decodingFailed
 }
 
-func CallGrade(ques: String, userAns: String) async throws -> Bool {
+func CallGrade(ques: String, userAns: String) async throws -> GradeScoreResult {
     var components = URLComponents()
     components.scheme = "http"
     components.host = "127.0.0.1"
@@ -72,8 +109,9 @@ func CallGrade(ques: String, userAns: String) async throws -> Bool {
             throw CallError.invalidResponse
         }
         if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-           let text = json["text"] as? String {
-            return text.lowercased().contains("true")
+           let text = json["text"] as? String,
+           let scoreResult = parseGradeScoreText(text) {
+            return scoreResult
         }
     } catch {
         throw CallError.requestFailed
