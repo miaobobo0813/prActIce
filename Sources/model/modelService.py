@@ -117,7 +117,7 @@ async def quesAPI(grade: str, subject: str, unit: str, type: str):
     messages = [
         {
             "role": "system",
-            "content": "你是一个出卷老师，请按照科目、单元、年级、题型出题。题型的类型中choose代表选择/判断, fillBlank代表填空, answer代表实验探究/解答/综合。只需出一题即可。",
+            "content": "你是一个出卷老师，请按照科目、单元、年级、题型出题。题型的类型有choose, fillBlank, answer，分别对应选择/判断、填空、实验探究/解答/综合。数学、科学使用浙教版，英语使用外研版，剩余科目使用人教版。只需出一题即可。",
         },
         {"role": "user", "content": instruction},
     ]

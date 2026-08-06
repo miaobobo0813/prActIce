@@ -22,7 +22,7 @@ if __name__ == "__main__":
     formattedDataOfQues = []
     for data in dataOfQues:
         messages = [
-            {"role": "system", "content": "你是一个出卷老师，请按照科目、单元、年级、题型出题。题型的类型有choose, fillBlank, answer，分别对应选择/判断、填空、实验探究/解答/综合"}, 
+            {"role": "system", "content": "你是一个出卷老师，请按照科目、单元、年级、题型出题。题型的类型有choose, fillBlank, answer，分别对应选择/判断、填空、实验探究/解答/综合。数学、科学使用浙教版，英语使用外研版，剩余科目使用人教版。"}, 
             {"role": "user", "content": f"学科：{data['subject']}，年级：{data['grade'][1]}年级{'上册' if data['grade'][0] == 'A' else '下册'}，单元：{data['unit']}，题型：{data['type']}"}, 
             {"role": "assistant", "content": data['output']}
         ]

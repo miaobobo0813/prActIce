@@ -68,5 +68,40 @@
         "unit": "第五单元", 
         "type": "fillBlank", 
         "output": "在《望岳》中，杜甫通过“_▲_，_▲_”表达了自己终将登上顶峰，俯瞰众山的豪情壮志。"
+    }, 
+    {
+        "subject": "Geography", 
+        "grade": "B7", 
+        "unit": "第八章 我们邻近的地区和国家", 
+        "type": "choose", 
+        "output": "印度半岛的自然环境特征是_▲_。\\nA. 河网密布，冬季结冰\\nB. 地势平坦，地广人稀\\nC. 高原冻土，土壤肥沃\\nD. 季风气候，雨热同期"
+    }, 
+    {
+        "subject": "Chinese", 
+        "grade": "A8", 
+        "unit": "第三单元", 
+        "type": "answer", 
+        "output": "阅读古诗，回答问题。\\n龟虽寿\\n东汉 曹操\\n神龟虽寿，犹有竟时。\\n腾蛇乘雾，终为土灰。\\n老骥伏枥，志在千里。\\n烈士暮年，壮心不已。\\n盈缩之期，不但在天；\\n养怡之福，可得永年。\\n幸甚至哉，歌以咏志。\\n(1 本题3分) 下列对古诗的理解和赏析，不正确的是_▲_。\\nA. 诗歌开篇以“神龟”和“腾蛇”起笔，指出即使是传说中极具神异、能够长寿通灵的神物，也终有死亡化为土灰的一天，体现了诗人对自然规律的清醒认知。\\nB. “老骥伏枥，志在千里”运用了比喻的手法，诗人以衰老却仍怀千里之志的骏马自比，生动地抒发了自己虽至晚年，却依然胸怀统一天下的宏伟抱负。\\nC. “烈士暮年，壮心不已”中的“烈士”指的是为正义事业而牺牲的人，这句诗表达了诗人对古代英雄人物的崇敬与缅怀，以及对时光流逝的无奈。\\nD. 诗歌后半部分“盈缩之期，不但在天；养怡之福，可得永年”体现了诗人辩证的生命观，既承认寿命长短受自然规律制约，又强调可以通过调养身心、保持乐观来延年益寿。\\n(2 本题7分) 诗中“神龟虽寿，犹有竟时。腾蛇乘雾，终为土灰”与“老骥伏枥，志在千里。烈士暮年，壮心不已”在情感表达上形成了怎样的关系？请结合全诗简要分析。"
+    }, 
+    {
+        "subject": "Math", 
+        "grade": "B8", 
+        "unit": "第4章 平行四边形", 
+        "type": "choose", 
+        "output": "下列条件中，一共有_▲_个条件可以证明四边形ABCD是平行四边形。(保证所有点在同一平面)\\n1.AB//CD且AC//BD 2.AB//CD且AB=CD 3.AB//CD且⦣BAC+⦣ABD=180˚ 4.AB=CD且⦣BAC=90˚\\nA. 0   B. 1   C. 2   D. 3"
+    }, 
+    {
+        "subject": "Science", 
+        "grade": "B7", 
+        "unit": "第2章 物质的微观结构", 
+        "type": "fillBlank", 
+        "output": "用化学式表示下列物质。\\n1. 氢气   2. 金刚石   3. 氖气\\n4. 二氧化碳\\n5. 三氧化二铝"
+    }, 
+    {
+        "subject": "English", 
+        "grade": "A8", 
+        "unit": "Unit 1 This is me", 
+        "type": "choose", 
+        "output": "完形填空。\\nI have a good friend named Tom. He is a very 1._▲_ student in our class. Everyone likes him because he is kind and always helps others. However, we have some 2._▲_. For example, I like quiet places, but he prefers 3._▲_ places like the market.\\nLast week, we went to the cinema to watch a movie about a 4._▲_ who saves the world. The story was exciting, but I didn't 5._▲_ the ending. I thought it was a bit sad. Tom, 6._▲_, thought it was perfect.\\n7._▲_ we have different tastes, we are still good friends. In my 8._▲_, true 9._▲_ is more important than being the same. We promised to 10._▲_ our dreams together forever.\\n1. A. excellent  B. terrible  C. lazy  D. shy\\n2. A. hobbies  B. differences  C. problems  D. subjects\\n3. A. quiet  B. empty  C. crowded  D. clean\\n4. A. superman  B. teacher  C. doctor  D. farmer\\n5. A. watch  B. like  C. make  D. know\\n6. A. so  B. and  C. or  D. however\\n7. A. Because  B. If  C. Although  D. When\\n8. A. opinion  B. book  C. room  D. class\\n9. A. life  B. friendship  C. family  D. money\\n10. A. give up  B. look for  C. stick to  D. talk about"
     }
 ]
