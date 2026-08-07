@@ -332,6 +332,9 @@ class SwiftTUI {
     public func LoadingSpinner(title: String = "正在处理，请等待...", done: String = "✓ 已完成", until: @escaping () async -> Void, x: Int16? = nil, y: Int16? = nil, doneColor: Color = .success, titleColor: Color = .white) async {
         let frame = ["-", "\\", "|", "/"]
         var nowFrame = 0
+
+        Text("\u{001B}]9;4;3;0\u{0007}", nextLine: false)
+
         if let x=x, let y=y {
             moveTo(x: x, y: y)
         }
@@ -346,6 +349,7 @@ class SwiftTUI {
             nowFrame = (nowFrame+1)%4
             try? await Task.sleep(nanoseconds: 500_000_000)
         }
+        Text("\u{001B}]9;4;0;0\u{0007}", nextLine: false)
         Text(String(repeating: " ", count: getWidth(title)+2), x: 0, y: nowY, nextLine: false)
         Text(done, x: 0, y: nowY, color: doneColor)
     }

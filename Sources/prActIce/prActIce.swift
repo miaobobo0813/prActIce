@@ -244,6 +244,7 @@ struct prActIce {
                                 } else {
                                     tui.Text("输入有偏差。不会移出练习册。", color: .error)
                                 }
+                                isBack = false
                             case 2:
                                 isBack = true
                             default:
