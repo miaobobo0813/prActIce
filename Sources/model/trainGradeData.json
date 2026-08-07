@@ -118,5 +118,70 @@
         "question": "用化学式表示下列物质。\\n1. 氢气   2. 金刚石   3. 氖气\\n4. 二氧化碳\\n5. 三氧化二铝", 
         "userAnswer": "1. H; 2. C; 3. Ne; 4. CO; 5. AlO", 
         "output": "2/5"
+    }, 
+    {
+        "question": "老舍先生的长篇小说《骆驼祥子》讲述了旧北京人力车夫祥子的辛酸故事。祥子来自农村，他最大的梦想是_▲_，为此他省吃俭用，苦干三年终于买上了自己的车，但很快被_▲_抢走；后来他攒的钱又被_▲_敲诈一空；最终他被迫与车厂老板刘四爷的女儿_▲_结婚，用她的钱又买了一辆车，却因她难产而死不得不卖车安葬。经历三起三落后，祥子彻底堕落，沦为城市的“垃圾”。", 
+        "userAnswer": "拥有一辆自己的车；宪兵；孙侦探；虎妞", 
+        "output": "4/4"
+    }, 
+    {
+        "question": "老舍先生的长篇小说《骆驼祥子》讲述了旧北京人力车夫祥子的辛酸故事。祥子来自农村，他最大的梦想是_▲_，为此他省吃俭用，苦干三年终于买上了自己的车，但很快被_▲_抢走；后来他攒的钱又被_▲_敲诈一空；最终他被迫与车厂老板刘四爷的女儿_▲_结婚，用她的钱又买了一辆车，却因她难产而死不得不卖车安葬。经历三起三落后，祥子彻底堕落，沦为城市的“垃圾”。", 
+        "userAnswer": "拥有一辆自己的车; 乱兵; 孙侦探; 虎妞", 
+        "output": "4/4"
+    }, 
+    {
+        "question": "老舍先生的长篇小说《骆驼祥子》讲述了旧北京人力车夫祥子的辛酸故事。祥子来自农村，他最大的梦想是_▲_，为此他省吃俭用，苦干三年终于买上了自己的车，但很快被_▲_抢走；后来他攒的钱又被_▲_敲诈一空；最终他被迫与车厂老板刘四爷的女儿_▲_结婚，用她的钱又买了一辆车，却因她难产而死不得不卖车安葬。经历三起三落后，祥子彻底堕落，沦为城市的“垃圾”。", 
+        "userAnswer": "拥有一辆自己的汽车；乱兵；孙侦探；虎妞", 
+        "output": "3/4"
+    }, 
+    {
+        "question": "老舍先生的长篇小说《骆驼祥子》讲述了旧北京人力车夫祥子的辛酸故事。祥子来自农村，他最大的梦想是_▲_，为此他省吃俭用，苦干三年终于买上了自己的车，但很快被_▲_抢走；后来他攒的钱又被_▲_敲诈一空；最终他被迫与车厂老板刘四爷的女儿_▲_结婚，用她的钱又买了一辆车，却因她难产而死不得不卖车安葬。经历三起三落后，祥子彻底堕落，沦为城市的“垃圾”。", 
+        "userAnswer": "拥有一辆自己的汽车；乱兵；孙侦探；虎妞", 
+        "output": "3/4"
+    }, 
+    {
+        "question": "老舍先生的长篇小说《骆驼祥子》讲述了旧北京人力车夫祥子的辛酸故事。祥子来自农村，他最大的梦想是_▲_，为此他省吃俭用，苦干三年终于买上了自己的车，但很快被_▲_抢走；后来他攒的钱又被_▲_敲诈一空；最终他被迫与车厂老板刘四爷的女儿_▲_结婚，用她的钱又买了一辆车，却因她难产而死不得不卖车安葬。经历三起三落后，祥子彻底堕落，沦为城市的“垃圾”。", 
+        "userAnswer": "拥有一辆自己的汽车；乱兵；孙侦探；小福子", 
+        "output": "2/4"
+    }, 
+    {
+        "question": "请从下列词语中，选择合适的单词或短语，使用它们的正确形式填空。每个选项限用一次。\\ninvent   weigh   lend a hand   trouble   creative\\nLast week, our school held a Science Festival. It was a great success because everyone was very 1._▲_. They made many cool things.\\nMy best friend Tom is good at making robots. He even 2._▲_ a small cleaning robot by himself! It was amazing. However, I had some 3._▲_ with my model plane. It didn't fly well.\\nJust then, Tom came over to 4._▲_. He helped me fix it in five minutes. He told me his robot 5._▲_ only 2 kilograms, so it was very light and fast. I learned a lot from him.", 
+        "userAnswer": "creative；invented；trouble；lend a hand；weighed", 
+        "output": "5/5"
+    }, 
+    {
+        "question": "请从下列词语中，选择合适的单词或短语，使用它们的正确形式填空。每个选项限用一次。\\ninvent   weigh   lend a hand   trouble   creative\\nLast week, our school held a Science Festival. It was a great success because everyone was very 1._▲_. They made many cool things.\\nMy best friend Tom is good at making robots. He even 2._▲_ a small cleaning robot by himself! It was amazing. However, I had some 3._▲_ with my model plane. It didn't fly well.\\nJust then, Tom came over to 4._▲_. He helped me fix it in five minutes. He told me his robot 5._▲_ only 2 kilograms, so it was very light and fast. I learned a lot from him.", 
+        "userAnswer": "creative; invent; trouble; lend a hand; weigh", 
+        "output": "3/5"
+    }, 
+    {
+        "question": "现有一个电阻为10Ω的导体，在串联上6V的电源和一个5Ω的定值电阻后，通过该该导体的电流为_▲_A。", 
+        "userAnswer": "0.4A", 
+        "output": "1/1"
+    }, 
+    {
+        "question": "现有一个电阻为10Ω的导体，在串联上6V的电源和一个5Ω的定值电阻后，通过该该导体的电流为_▲_A。", 
+        "userAnswer": "4/10A", 
+        "output": "1/1"
+    }, 
+    {
+        "question": "现有一个电阻为10Ω的导体，在串联上6V的电源和一个5Ω的定值电阻后，通过该该导体的电流为_▲_A。", 
+        "userAnswer": "0.2A", 
+        "output": "0/1"
+    }, 
+    {
+        "question": "现有一个电阻为10Ω的导体，在串联上6V的电源和一个5Ω的定值电阻后，通过该该导体的电流为_▲_A。", 
+        "userAnswer": "2/5A", 
+        "output": "1/1"
+    }, 
+    {
+        "question": "光沿直线传播。(T/F)", 
+        "userAnswer": "T", 
+        "output": "0/1"
+    }, 
+    {
+        "question": "光在同种均匀介质中直线传播。(T/F)", 
+        "userAnswer": "T", 
+        "output": "1/1"
     }
 ]

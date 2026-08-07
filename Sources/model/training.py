@@ -26,19 +26,31 @@ if __name__ == "__main__":
             {"role": "user", "content": f"学科：{data['subject']}，年级：{data['grade'][1]}年级{'上册' if data['grade'][0] == 'A' else '下册'}，单元：{data['unit']}，题型：{data['type']}"}, 
             {"role": "assistant", "content": data['output']}
         ]
-        inputID = tokenizer.apply_chat_template(messages, tokenize=True, generation_promat=False)
-        formattedDataOfQues.append({"input_ids": inputID})
+        fullText = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=False)
+        inputID = tokenizer(fullText, truncation=True, max_length=512)["input_ids"]
+        promptText = tokenizer.apply_chat_template(messages[:-1], tokenize=False, add_generation_prompt=True)
+        promptIDs = tokenizer(promptText, add_special_tokens=False)["input_ids"]
+        labels = inputID.copy()
+        promptLen = len(promptIDs)
+        labels[:promptLen] = [-100]*promptLen
+        formattedDataOfQues.append({"input_ids": inputID, "labels": labels})
     datasetOfQues = Dataset.from_list(formattedDataOfQues)
     formattedDataOfGrade = []
     for data in dataOfGrade:
-        output = "1/1" if data.get("output") else "0/1"
+        output = str(data.get("output", "0/1"))
         messages = [
             {"role": "system", "content": "你是一个批改作业的老师。请根据题目类型进行评分：选择题和填空题每空1分，若回答正确则输出 1/1；若回答错误则输出 0/1；若题目包含多个空，请按空数给出如 2/3 或 1/3 的分数。请只输出最终评分结果，不要解释。"}, 
             {"role": "user", "content": f"问题：{data['question']}，学生回答；{data['userAnswer']}"}, 
             {"role": "assistant", "content": output}
         ]
-        inputID = tokenizer.apply_chat_template(messages, tokenize=True, generation_promat=False)
-        formattedDataOfGrade.append({"input_ids": inputID})
+        fullText = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=False)
+        inputID = tokenizer(fullText, truncation=True, max_length=512)["input_ids"]
+        promptText = tokenizer.apply_chat_template(messages[:-1], tokenize=False, add_generation_prompt=True)
+        promptIDs = tokenizer(promptText, add_special_tokens=False)["input_ids"]
+        labels = inputID.copy()
+        promptLen = len(promptIDs)
+        labels[:promptLen] = [-100]*promptLen
+        formattedDataOfGrade.append({"input_ids": inputID, "labels": labels})
     datasetOfGrade = Dataset.from_list(formattedDataOfGrade)
     peftConfig = LoraConfig(
         task_type=TaskType.CAUSAL_LM, 

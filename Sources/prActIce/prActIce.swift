@@ -188,7 +188,7 @@ struct prActIce {
                         })
                         let select = tui.List(showPracticeList, title: "选择要回顾的题目")
                         if practiceList[select].isWrong {
-                            let option = tui.List(["攻击错题！", "返回列表", "回到开始页面"], title: "\(practiceList[select].question) ✕ 在错题本中")
+                            let option = tui.List(["攻击错题！", "这超纲了啊……", "返回列表", "回到开始页面"], title: "\(practiceList[select].question) ✕ 在错题本中")
                             switch option {
                             case 0:
                                 tui.Text(practiceList[select].question, color: .title)
@@ -233,6 +233,18 @@ struct prActIce {
                                 }
                                 isBack = false
                             case 1:
+                                tui.Text("完整输入下方文字以将这题移出练习册。", color: .title)
+                                let agree = "Yes, this question is too difficult to me."
+                                tui.Text(agree, color: .error)
+                                let check = tui.TextField("输入")
+                                if (check == agree){
+                                    practiceList.remove(at: select)
+                                    practiceStore.save(practiceList)
+                                    tui.Text("成功将这题移出练习册。", color: .success)
+                                } else {
+                                    tui.Text("输入有偏差。不会移出练习册。", color: .error)
+                                }
+                            case 2:
                                 isBack = true
                             default:
                                 isBack = false

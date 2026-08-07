@@ -103,5 +103,75 @@
         "unit": "Unit 1 This is me", 
         "type": "choose", 
         "output": "完形填空。\\nI have a good friend named Tom. He is a very 1._▲_ student in our class. Everyone likes him because he is kind and always helps others. However, we have some 2._▲_. For example, I like quiet places, but he prefers 3._▲_ places like the market.\\nLast week, we went to the cinema to watch a movie about a 4._▲_ who saves the world. The story was exciting, but I didn't 5._▲_ the ending. I thought it was a bit sad. Tom, 6._▲_, thought it was perfect.\\n7._▲_ we have different tastes, we are still good friends. In my 8._▲_, true 9._▲_ is more important than being the same. We promised to 10._▲_ our dreams together forever.\\n1. A. excellent  B. terrible  C. lazy  D. shy\\n2. A. hobbies  B. differences  C. problems  D. subjects\\n3. A. quiet  B. empty  C. crowded  D. clean\\n4. A. superman  B. teacher  C. doctor  D. farmer\\n5. A. watch  B. like  C. make  D. know\\n6. A. so  B. and  C. or  D. however\\n7. A. Because  B. If  C. Although  D. When\\n8. A. opinion  B. book  C. room  D. class\\n9. A. life  B. friendship  C. family  D. money\\n10. A. give up  B. look for  C. stick to  D. talk about"
+    }, 
+    {
+        "subject": "EthicsAndTheRuleOfLaw", 
+        "grade": "B7", 
+        "unit": "第三单元 传承中华优秀传统文化", 
+        "type": "choose", 
+        "output": "做自强不息的中国人，我们只需要树立远大理想就能成功。(T/F)"
+    }, 
+    {
+        "subject": "EthicsAndTheRuleOfLaw", 
+        "grade": "B7", 
+        "unit": "第一单元 珍惜青春时光", 
+        "type": "choose", 
+        "output": "小明由于考试失利而情绪低落，他向同桌倾诉后，心情好多了。他调节情绪的方法是_▲_。\\nA. 注意转移法   B. 合理宣泄法   C. 认知调节法   D. 放松训练法"
+    }, 
+    {
+        "subject": "EthicsAndTheRuleOfLaw", 
+        "grade": "B7", 
+        "unit": "第三单元 传承中华优秀传统文化", 
+        "type": "choose", 
+        "output": "中华优秀传统文化的思想文化深邃博大，是解读中华民族历史发展的重要密码。下列属于这一密码的是_▲_。\\n1. 征服自然、唯我独尊的思想   2. 脚踏实地、实事求是的思想\\n3. 革故鼎新、与时俱进的思想   4. 惠民利民、安民富民的思想\\nA. 1.2.3.   B. 1.2.4.   C.1.3.4.   D.2.3.4."
+    }, 
+    {
+        "subject": "Chinese", 
+        "grade": "B7", 
+        "unit": "第三单元", 
+        "type": "fillBlank", 
+        "output": "老舍先生的长篇小说《骆驼祥子》讲述了旧北京人力车夫祥子的辛酸故事。祥子来自农村，他最大的梦想是_▲_，为此他省吃俭用，苦干三年终于买上了自己的车，但很快被_▲_抢走；后来他攒的钱又被_▲_敲诈一空；最终他被迫与车厂老板刘四爷的女儿_▲_结婚，用她的钱又买了一辆车，却因她难产而死不得不卖车安葬。经历三起三落后，祥子彻底堕落，沦为城市的“垃圾”。"
+    }, 
+    {
+        "subject": "English", 
+        "grade": "A8", 
+        "unit": "Unit 3 Make it happen!", 
+        "type": "fillBlank", 
+        "output": "请从下列词语中，选择合适的单词或短语，使用它们的正确形式填空。每个选项限用一次。\\ninvent   weigh   lend a hand   trouble   creative\\nLast week, our school held a Science Festival. It was a great success because everyone was very 1._▲_. They made many cool things.\\nMy best friend Tom is good at making robots. He even 2._▲_ a small cleaning robot by himself! It was amazing. However, I had some 3._▲_ with my model plane. It didn't fly well.\\nJust then, Tom came over to 4._▲_. He helped me fix it in five minutes. He told me his robot 5._▲_ only 2 kilograms, so it was very light and fast. I learned a lot from him."
+    }, 
+    {
+        "subject": "Math", 
+        "grade": "B8", 
+        "unit": "第1章 二次根式", 
+        "type": "fillBlank", 
+        "output": "化简二次根式：√(12)=_▲_"
+    },
+    {
+        "subject": "Science", 
+        "grade": "A8", 
+        "unit": "第3章 电路探秘", 
+        "type": "fillBlank", 
+        "output": "现有一个电阻为10Ω的导体，在串联上6V的电源和一个5Ω的定值电阻后，通过该该导体的电流为_▲_A。"
+    }, 
+    {
+        "subject": "Science", 
+        "grade": "A8", 
+        "unit": "第1章 对环境的察觉", 
+        "type": "choose", 
+        "output": "光沿直线传播。(T/F)"
+    }, 
+    {
+        "subject": "Science", 
+        "grade": "A8", 
+        "unit": "第1章 对环境的察觉", 
+        "type": "choose", 
+        "output": "光在同种均匀介质中直线传播。(T/F)"
+    }, 
+    {
+        "subject": "English", 
+        "grade": "B8", 
+        "unit": "Unit 3 What makes a great team?", 
+        "type": "fillBlank", 
+        "output": "根据中文释义，填入所缺单词的正确形式。\\nA great team is built on 1._▲_(信任), good 2._▲_(合作), and a shared 3._▲_(目标). Every member has a different 4._▲_(角色) to play, and no one can succeed 5._▲_(独自地). When facing 6._▲_(挑战), team members should 7._▲_(支持) each other and 8._▲_(分享) their ideas openly. A good 9._▲_(领导者) can bring out the best in everyone. Only when we learn to cooperate and work 10._▲_(一起), can we truly achieve success."
     }
 ]
