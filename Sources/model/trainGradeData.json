@@ -25,25 +25,35 @@
         "output": "1/1"
     },
     {
-        "question": "解一元一次方程：10x+15=-3x-2+3(x-5)。",
+        "question": "(本题3分) 解一元一次方程：10x+15=-3x-2+3(x-5)。(无需写出过程)",
         "userAnswer": "x=-(32/10)",
-        "output": "0/1"
+        "output": "2/3"
     },
     {
-        "question": "解一元一次方程：10x+15=-3x-2+3(x-5)。",
+        "question": "(本题3分) 解一元一次方程：10x+15=-3x-2+3(x-5)。(无需写出过程)",
         "userAnswer": "x=-3.2",
-        "output": "1/1"
+        "output": "3/3"
     },
     {
-        "question": "解一元一次方程：10x+15=-3x-2+3(x-5)。",
+        "question": "(本题3分) 解一元一次方程：10x+15=-3x-2+3(x-5)。(无需写出过程)",
         "userAnswer": "x=-16/5",
-        "output": "1/1"
+        "output": "3/3"
     },
     {
-        "question": "解一元一次方程：10x+15=-3x-2+3(x-5)。",
+        "question": "(本题3分) 解一元一次方程：10x+15=-3x-2+3(x-5)。(无需写出过程)",
         "userAnswer": "-(16/5)",
-        "output": "0/1"
+        "output": "2/3"
     },
+    {
+        "question": "(本题3分) 解一元一次方程：10x+15=-3x-2+3(x-5)。(无需写出过程)",
+        "userAnswer": "x=-(16/5)",
+        "output": "3/3"
+    }, 
+    {
+        "question": "(本题3分) 解一元一次方程：10x+15=-3x-2+3(x-5)。(无需写出过程)",
+        "userAnswer": "x=-1",
+        "output": "0/3"
+    }, 
     {
         "question": "熄灭酒精灯时，可以用嘴吹灭。(T/F)",
         "userAnswer": "错误",
@@ -182,6 +192,111 @@
     {
         "question": "光在同种均匀介质中直线传播。(T/F)", 
         "userAnswer": "T", 
+        "output": "1/1"
+    }, 
+    {
+        "question": "(本题15分) 假如你是Jack，今天是你的生日，你的家人正在准备生日晚餐。请根据以下表格中的信息给你的英国朋友Tim写一封电子邮件，描述你和你的家人在做什么。\\n1. 70词左右，开头和结尾已给出，不计入总词数。\\n2. 必须包括表格中提到的所有要点。\\n3. 条理清楚，语句通顺，意思连贯。\\n|Who  |What      |Where     |\\n|奶奶 |洗菜      |在厨房    |\\n|妈妈 |切菜      |在厨房|\\n|爸爸 |做鱼      |在厨房    |\\n|你   |写电子邮件|在你房间里|\\nDear Tim, \\n    How's every thing going? __▲__\\n__▲__\\n__▲__\\nYours, Jack", 
+        "userAnswer": "Dear Tim, How's every thing going? Yours, Jack", 
+        "output": "0/15"
+    }, 
+    {
+        "question": "(本题15分) 假如你是Jack，今天是你的生日，你的家人正在准备生日晚餐。请根据以下表格中的信息给你的英国朋友Tim写一封电子邮件，描述你和你的家人在做什么。\\n1. 70词左右，开头和结尾已给出，不计入总词数。\\n2. 必须包括表格中提到的所有要点。\\n3. 条理清楚，语句通顺，意思连贯。\\n|Who  |What      |Where     |\\n|奶奶 |洗菜      |在厨房    |\\n|妈妈 |切菜      |在厨房|\\n|爸爸 |做鱼      |在厨房    |\\n|你   |写电子邮件|在你房间里|\\nDear Tim, \\n    How's every thing going? __▲__\\n__▲__\\n__▲__\\nYours, Jack", 
+        "userAnswer": "I am happy.", 
+        "output": "1/15"
+    }, 
+    {
+        "question": "(本题15分) 假如你是Jack，今天是你的生日，你的家人正在准备生日晚餐。请根据以下表格中的信息给你的英国朋友Tim写一封电子邮件，描述你和你的家人在做什么。\\n1. 70词左右，开头和结尾已给出，不计入总词数。\\n2. 必须包括表格中提到的所有要点。\\n3. 条理清楚，语句通顺，意思连贯。\\n|Who  |What      |Where     |\\n|奶奶 |洗菜      |在厨房    |\\n|妈妈 |切菜      |在厨房|\\n|爸爸 |做鱼      |在厨房    |\\n|你   |写电子邮件|在你房间里|\\nDear Tim, \\n    How's every thing going? __▲__\\n__▲__\\n__▲__\\nYours, Jack", 
+        "userAnswer": "Dear Tim, How's every thing going? I am happy. Yours, Jack", 
+        "output": "1/15"
+    }, 
+    {
+        "question": "(本题15分) 假如你是Jack，今天是你的生日，你的家人正在准备生日晚餐。请根据以下表格中的信息给你的英国朋友Tim写一封电子邮件，描述你和你的家人在做什么。\\n1. 70词左右，开头和结尾已给出，不计入总词数。\\n2. 必须包括表格中提到的所有要点。\\n3. 条理清楚，语句通顺，意思连贯。\\n|Who  |What      |Where     |\\n|奶奶 |洗菜      |在厨房    |\\n|妈妈 |切菜      |在厨房|\\n|爸爸 |做鱼      |在厨房    |\\n|你   |写电子邮件|在你房间里|\\nDear Tim, \\n    How's every thing going? __▲__\\n__▲__\\n__▲__\\nYours, Jack", 
+        "userAnswer": "Today is my birthday. My family is very busy.", 
+        "output": "2/15"
+    }, 
+    {
+        "question": "(本题15分) 假如你是Jack，今天是你的生日，你的家人正在准备生日晚餐。请根据以下表格中的信息给你的英国朋友Tim写一封电子邮件，描述你和你的家人在做什么。\\n1. 70词左右，开头和结尾已给出，不计入总词数。\\n2. 必须包括表格中提到的所有要点。\\n3. 条理清楚，语句通顺，意思连贯。\\n|Who  |What      |Where     |\\n|奶奶 |洗菜      |在厨房    |\\n|妈妈 |切菜      |在厨房|\\n|爸爸 |做鱼      |在厨房    |\\n|你   |写电子邮件|在你房间里|\\nDear Tim, \\n    How's every thing going? __▲__\\n__▲__\\n__▲__\\nYours, Jack", 
+        "userAnswer": "Today is my birthday. My grandma is in the kitchen.", 
+        "output": "3/15"
+    }, 
+    {
+        "question": "(本题15分) 假如你是Jack，今天是你的生日，你的家人正在准备生日晚餐。请根据以下表格中的信息给你的英国朋友Tim写一封电子邮件，描述你和你的家人在做什么。\\n1. 70词左右，开头和结尾已给出，不计入总词数。\\n2. 必须包括表格中提到的所有要点。\\n3. 条理清楚，语句通顺，意思连贯。\\n|Who  |What      |Where     |\\n|奶奶 |洗菜      |在厨房    |\\n|妈妈 |切菜      |在厨房|\\n|爸爸 |做鱼      |在厨房    |\\n|你   |写电子邮件|在你房间里|\\nDear Tim, \\n    How's every thing going? __▲__\\n__▲__\\n__▲__\\nYours, Jack", 
+        "userAnswer": "Dear Tim, How's every thing going? Today is my birthday. My grandma is washing vegetables in the kitchen. My mom is cooking. Yours, Jack", 
+        "output": "4/15"
+    }, 
+    {
+        "question": "(本题15分) 假如你是Jack，今天是你的生日，你的家人正在准备生日晚餐。请根据以下表格中的信息给你的英国朋友Tim写一封电子邮件，描述你和你的家人在做什么。\\n1. 70词左右，开头和结尾已给出，不计入总词数。\\n2. 必须包括表格中提到的所有要点。\\n3. 条理清楚，语句通顺，意思连贯。\\n|Who  |What      |Where     |\\n|奶奶 |洗菜      |在厨房    |\\n|妈妈 |切菜      |在厨房|\\n|爸爸 |做鱼      |在厨房    |\\n|你   |写电子邮件|在你房间里|\\nDear Tim, \\n    How's every thing going? __▲__\\n__▲__\\n__▲__\\nYours, Jack", 
+        "userAnswer": "Today is my birthday. My grandma is washing vegetables in the kitchen. My mom is cooking.", 
+        "output": "4/15"
+    }, 
+    {
+        "question": "(本题15分) 假如你是Jack，今天是你的生日，你的家人正在准备生日晚餐。请根据以下表格中的信息给你的英国朋友Tim写一封电子邮件，描述你和你的家人在做什么。\\n1. 70词左右，开头和结尾已给出，不计入总词数。\\n2. 必须包括表格中提到的所有要点。\\n3. 条理清楚，语句通顺，意思连贯。\\n|Who  |What      |Where     |\\n|奶奶 |洗菜      |在厨房    |\\n|妈妈 |切菜      |在厨房|\\n|爸爸 |做鱼      |在厨房    |\\n|你   |写电子邮件|在你房间里|\\nDear Tim, \\n    How's every thing going? __▲__\\n__▲__\\n__▲__\\nYours, Jack", 
+        "userAnswer": "Today is my birthday. My grandma is washing vegetables in the kitchen. My mom is cutting vegetables. My dad is in the kitchen.", 
+        "output": "5/15"
+    }, 
+    {
+        "question": "(本题15分) 假如你是Jack，今天是你的生日，你的家人正在准备生日晚餐。请根据以下表格中的信息给你的英国朋友Tim写一封电子邮件，描述你和你的家人在做什么。\\n1. 70词左右，开头和结尾已给出，不计入总词数。\\n2. 必须包括表格中提到的所有要点。\\n3. 条理清楚，语句通顺，意思连贯。\\n|Who  |What      |Where     |\\n|奶奶 |洗菜      |在厨房    |\\n|妈妈 |切菜      |在厨房|\\n|爸爸 |做鱼      |在厨房    |\\n|你   |写电子邮件|在你房间里|\\nDear Tim, \\n    How's every thing going? __▲__\\n__▲__\\n__▲__\\nYours, Jack", 
+        "userAnswer": "Today is my birthday. My grandma is washing vegetables in the kitchen. My mom is cutting vegetables in the kitchen. My dad is cooking fish in the kitchen. I am writing an email.", 
+        "output": "6/15"
+    }, 
+    {
+        "question": "(本题15分) 假如你是Jack，今天是你的生日，你的家人正在准备生日晚餐。请根据以下表格中的信息给你的英国朋友Tim写一封电子邮件，描述你和你的家人在做什么。\\n1. 70词左右，开头和结尾已给出，不计入总词数。\\n2. 必须包括表格中提到的所有要点。\\n3. 条理清楚，语句通顺，意思连贯。\\n|Who  |What      |Where     |\\n|奶奶 |洗菜      |在厨房    |\\n|妈妈 |切菜      |在厨房|\\n|爸爸 |做鱼      |在厨房    |\\n|你   |写电子邮件|在你房间里|\\nDear Tim, \\n    How's every thing going? __▲__\\n__▲__\\n__▲__\\nYours, Jack", 
+        "userAnswer": "Today is my birthday and my family is preparing a birthday dinner. My grandma is washing vegetables in the kitchen. My mom is cutting vegetables in the kitchen. My dad is cooking fish in the kitchen. I am writing this email to you in my room. Everyone is busy.", 
+        "output": "8/15"
+    }, 
+    {
+        "question": "(本题15分) 假如你是Jack，今天是你的生日，你的家人正在准备生日晚餐。请根据以下表格中的信息给你的英国朋友Tim写一封电子邮件，描述你和你的家人在做什么。\\n1. 70词左右，开头和结尾已给出，不计入总词数。\\n2. 必须包括表格中提到的所有要点。\\n3. 条理清楚，语句通顺，意思连贯。\\n|Who  |What      |Where     |\\n|奶奶 |洗菜      |在厨房    |\\n|妈妈 |切菜      |在厨房|\\n|爸爸 |做鱼      |在厨房    |\\n|你   |写电子邮件|在你房间里|\\nDear Tim, \\n    How's every thing going? __▲__\\n__▲__\\n__▲__\\nYours, Jack", 
+        "userAnswer": "Today is my birthday and my family is preparing a big birthday dinner. My grandma is washing vegetables in the kitchen. My mom is cutting vegetables there. My dad is cooking fish. As for me, I am writing this email to you in my room. Everyone is busy but happy. I can't wait to enjoy the dinner!", 
+        "output": "10/15"
+    }, 
+    {
+        "question": "(本题15分) 假如你是Jack，今天是你的生日，你的家人正在准备生日晚餐。请根据以下表格中的信息给你的英国朋友Tim写一封电子邮件，描述你和你的家人在做什么。\\n1. 70词左右，开头和结尾已给出，不计入总词数。\\n2. 必须包括表格中提到的所有要点。\\n3. 条理清楚，语句通顺，意思连贯。\\n|Who  |What      |Where     |\\n|奶奶 |洗菜      |在厨房    |\\n|妈妈 |切菜      |在厨房|\\n|爸爸 |做鱼      |在厨房    |\\n|你   |写电子邮件|在你房间里|\\nDear Tim, \\n    How's every thing going? __▲__\\n__▲__\\n__▲__\\nYours, Jack", 
+        "userAnswer": "Dear Tim, How's every thing going? Today is my birthday and my family is preparing a wonderful birthday dinner. In the kitchen, my grandma is washing vegetables while my mom is cutting them into pieces. My dad is cooking his special fish dish. I am writing this email to you in my room. Everyone is busy but happy. I really love my family and I can't wait to share the dinner with them. Yours, Jack", 
+        "output": "12/15"
+    }, 
+    {
+        "question": "(本题15分) 假如你是Jack，今天是你的生日，你的家人正在准备生日晚餐。请根据以下表格中的信息给你的英国朋友Tim写一封电子邮件，描述你和你的家人在做什么。\\n1. 70词左右，开头和结尾已给出，不计入总词数。\\n2. 必须包括表格中提到的所有要点。\\n3. 条理清楚，语句通顺，意思连贯。\\n|Who  |What      |Where     |\\n|奶奶 |洗菜      |在厨房    |\\n|妈妈 |切菜      |在厨房|\\n|爸爸 |做鱼      |在厨房    |\\n|你   |写电子邮件|在你房间里|\\nDear Tim, \\n    How's every thing going? __▲__\\n__▲__\\n__▲__\\nYours, Jack", 
+        "userAnswer": "Dear Tim, How's every thing going? Today is my birthday and my family is preparing a wonderful birthday dinner for me. In the kitchen, my grandma is washing vegetables while my mom is cutting them carefully. My dad is cooking his special fish dish. As for me, I am writing this email to you in my room. Everyone is busy but happy. I feel so lucky and I can't wait to enjoy the delicious dinner with my family. Yours, Jack", 
+        "output": "13/15"
+    }, 
+    {
+        "question": "(本题15分) 假如你是Jack，今天是你的生日，你的家人正在准备生日晚餐。请根据以下表格中的信息给你的英国朋友Tim写一封电子邮件，描述你和你的家人在做什么。\\n1. 70词左右，开头和结尾已给出，不计入总词数。\\n2. 必须包括表格中提到的所有要点。\\n3. 条理清楚，语句通顺，意思连贯。\\n|Who  |What      |Where     |\\n|奶奶 |洗菜      |在厨房    |\\n|妈妈 |切菜      |在厨房|\\n|爸爸 |做鱼      |在厨房    |\\n|你   |写电子邮件|在你房间里|\\nDear Tim, \\n    How's every thing going? __▲__\\n__▲__\\n__▲__\\nYours, Jack", 
+        "userAnswer": "Today is my birthday and my family is preparing a wonderful birthday dinner for me. In the kitchen, my grandma is washing vegetables while my mom is cutting them carefully. My dad is cooking his special fish dish, which smells really good. As for me, I am writing this email to you in my room. Everyone is busy but happy. I feel so lucky to have such a warm family. I can't wait to enjoy the delicious dinner together!", 
+        "output": "14/15"
+    }, 
+    {
+        "question": "(本题15分) 假如你是Jack，今天是你的生日，你的家人正在准备生日晚餐。请根据以下表格中的信息给你的英国朋友Tim写一封电子邮件，描述你和你的家人在做什么。\\n1. 70词左右，开头和结尾已给出，不计入总词数。\\n2. 必须包括表格中提到的所有要点。\\n3. 条理清楚，语句通顺，意思连贯。\\n|Who  |What      |Where     |\\n|奶奶 |洗菜      |在厨房    |\\n|妈妈 |切菜      |在厨房|\\n|爸爸 |做鱼      |在厨房    |\\n|你   |写电子邮件|在你房间里|\\nDear Tim, \\n    How's every thing going? __▲__\\n__▲__\\n__▲__\\nYours, Jack", 
+        "userAnswer": "Today is my birthday and my family is preparing a wonderful birthday dinner for me. In the kitchen, my grandma is washing vegetables while my mom is cutting them carefully. My dad is cooking his special fish dish, which smells really good. As for me, I am writing this email to you in my room. Everyone is busy but happy. I feel so lucky to have such a warm and loving family. I can't wait to enjoy the delicious dinner together! Hope you can join us next time.", 
+        "output": "15/15"
+    }, 
+    {
+        "question": "(本题15分) 假如你是Jack，今天是你的生日，你的家人正在准备生日晚餐。请根据以下表格中的信息给你的英国朋友Tim写一封电子邮件，描述你和你的家人在做什么。\\n1. 70词左右，开头和结尾已给出，不计入总词数。\\n2. 必须包括表格中提到的所有要点。\\n3. 条理清楚，语句通顺，意思连贯。\\n|Who  |What      |Where     |\\n|奶奶 |洗菜      |在厨房    |\\n|妈妈 |切菜      |在厨房|\\n|爸爸 |做鱼      |在厨房    |\\n|你   |写电子邮件|在你房间里|\\nDear Tim, \\n    How's every thing going? __▲__\\n__▲__\\n__▲__\\nYours, Jack", 
+        "userAnswer": "Dear Tim, How's every thing going? Today is my birthday and my family is preparing a wonderful birthday dinner for me. In the kitchen, my grandma is washing vegetables while my mom is cutting them carefully. My dad is cooking his special fish dish, which smells really good. As for me, I am writing this email to you in my room. Everyone is busy but happy. I feel so lucky to have such a warm and loving family. I can't wait to enjoy the delicious dinner together! Hope you can join us next time. Yours, Jack", 
+        "output": "15/15"
+    }, 
+    {
+        "question": "两条不相交的直线平行。(T/F)", 
+        "userAnswer": "F", 
+        "output": "1/1"
+    }, 
+    {
+        "question": "两条不相交的直线平行。(T/F)", 
+        "userAnswer": "错误", 
+        "output": "1/1"
+    }, 
+    {
+        "question": "两条不相交的直线平行。(T/F)", 
+        "userAnswer": "X", 
+        "output": "1/1"
+    }, 
+    {
+        "question": "两条不相交的直线平行。(T/F)", 
+        "userAnswer": "正确", 
+        "output": "0/1"
+    }, 
+    {
+        "question": "下列属于科学问题的是_▲_。\\nA. 哪种品牌的牛奶更好喝\\nB. 哪种花卉更美观\\nC. 植物生长是否需要阳光\\nD. 哪种颜色的衣服更流行", 
+        "userAnswer": "选项C", 
         "output": "1/1"
     }
 ]
