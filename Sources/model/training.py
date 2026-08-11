@@ -65,10 +65,10 @@ if __name__ == "__main__":
     model.set_adapter("ques")
     trainArgsForQues = TrainingArguments(
         output_dir="./Sources/model/outputQues", 
-        num_train_epochs=3, 
+        num_train_epochs=10, 
         per_device_train_batch_size=1, 
         gradient_accumulation_steps=4, 
-        learning_rate=2e-4, 
+        learning_rate=1e-4, 
         fp16=False, 
         optim="adamw_torch", 
         logging_steps=1, 
@@ -89,10 +89,10 @@ if __name__ == "__main__":
     model.set_adapter("grade")
     trainArgsForGrade = TrainingArguments(
         output_dir="./Sources/model/outputGrade", 
-        num_train_epochs=3, 
+        num_train_epochs=10, 
         per_device_train_batch_size=1, 
         gradient_accumulation_steps=4, 
-        learning_rate=2e-4, 
+        learning_rate=1e-4, 
         fp16=False, 
         optim="adamw_torch", 
         logging_steps=1, 

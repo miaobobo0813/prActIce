@@ -257,7 +257,14 @@ class SwiftTUI {
             moveTo(x: x, y: y)
         }
         setColor(color)
-        print(content, terminator: "")
+        if content.contains("\n") {
+            let contents = content.split(separator: "\n", omittingEmptySubsequences: false)
+            for con in contents {
+                Text(con, x: x, color: color)
+            }
+        } else {
+            print(content, terminator: "")
+        }
         fflush(stdout)
         resetColor()
         if nextLine {
