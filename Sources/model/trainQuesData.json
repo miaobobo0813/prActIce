@@ -299,5 +299,61 @@
         "unit": "第6章 图形的初步知识", 
         "type": "choose", 
         "output": "如图，下列选项中，_▲_能判定AB//CD。\\nA ----- B\\n /    /\\n/____/\\nC     D\\nA. ⦣BAC=⦣ACD\\nB. ⦣BAC+⦣ABD=180˚\\nC. ⦣ABD+⦣BDC=180˚\\nD. ⦣ACD=⦣BDC"
+    }, 
+    {
+        "subject": "Science", 
+        "grade": "A8", 
+        "unit": "第2章 力与空间探索", 
+        "type": "choose", 
+        "output": "压强，是表示_▲_的物理量，通常用字母_▲_表示压强。\\nA. 力的大小   B. 力的作用效果\\nC. 压力的大小   D. 压力的作用效果\\nE. p   F. P\\nG. f   H. F"
+    }, 
+    {
+        "subject": "EthicsAndTheRuleOfLaw", 
+        "grade": "B8", 
+        "unit": "第二单元 理解权利义务", 
+        "type": "choose", 
+        "output": "小明的爸爸在一家工厂工作，因工厂长期拖欠工资，爸爸准备去劳动部门投诉维权。小明对爸爸说：“咱们直接去厂门口拉横幅抗议吧，这样来得快！”爸爸拒绝了小明的建议，坚持通过合法途径解决问题。\\n对此，下列认识正确的是_▲_\\nA. 小明爸爸应当听从儿子的建议，维权方式越激烈效果越好\\nB. 小明爸爸通过劳动部门投诉维权，是在依法行使权利、维护自身合法权益\\nC. 工厂拖欠工资侵犯了劳动者的休息权，小明爸爸应当直接向法院起诉\\nD. 小明爸爸应当先在网上曝光工厂信息，再决定是否投诉"
+    }, 
+    {
+        "subject": "History", 
+        "grade": "B7", 
+        "unit": "第一单元 隋唐时期：繁荣与开放的时代", 
+        "type": "choose", 
+        "output": "隋朝创立，唐朝进一步完善的一种通过考试选拔官员的制度，打破了门第限制，使有才学的人能够由此参政。这一制度是_▲_。\\nA. 禅让制\\nB. 世袭制\\nC. 科举制\\nD. 九品中正制"
+    }, 
+    {
+        "subject": "EthicsAndTheRuleOfLaw", 
+        "grade": "B8", 
+        "unit": "第二单元 理解权利义务", 
+        "type": "choose", 
+        "output": "小红的妈妈在网上购买了一部手机，收到后发现是翻新机。商家拒绝退货，并声称“商品售出，概不退换”。小红建议妈妈自认倒霉，但妈妈决定向消费者协会投诉。对此，下列认识正确的是_▲_\\nA. 小红的建议是明智的，因为维权过程太麻烦，不值得\\nB. 妈妈向消费者协会投诉，是依法维护自身作为消费者的合法权益\\nC. 商家“商品售出，概不退换”的规定是合理的，妈妈应该遵守\\nD. 妈妈应该直接去商家门口拉横幅，这样才能引起重视，快速解决问题"
+    }, 
+    {
+        "subject": "Chinese", 
+        "grade": "B8", 
+        "unit": "第五单元", 
+        "type": "fillBlank", 
+        "output": "根据积累填空：\\n王安石在《登飞来峰》中，用“_▲_，_▲_”两句诗，表达了自己不畏奸邪、对前途充满信心的豪情壮志和高瞻远瞩的胸襟。"
+    }, 
+    {
+        "subject": "Science", 
+        "grade": "A7", 
+        "unit": "第1章 探索自然的科学", 
+        "type": "choose", 
+        "output": "在实验室里，为了节约药品，实验剩余的药品应该放回原试剂瓶。(T/F)"
+    }, 
+    {
+        "subject": "Math", 
+        "grade": "B8", 
+        "unit": "第1章 二次根式", 
+        "type": "choose", 
+        "output": "所有二次根式都是无理数。(T/F)"
+    }, 
+    {
+        "subject": "English", 
+        "grade": "B7", 
+        "unit": "Unit 1 The secrets of happiness", 
+        "type": "choose", 
+        "output": "完形填空。\\nMany people think happiness means having a lot of money or being famous. But is that true?\\nMy friend Tom is a good example. He isn't rich, but he is always 1._▲_. He smiles at everyone and is ready to help others. He told me his secret: \"Happiness is not about what you have, but what you 2._▲_.\"\\nLast week, we went to the park. We saw an old man looking for his dog. Tom didn't 3._▲_ to help him. After an hour, we found the dog. The old man was so happy and thanked us again and again. Tom said, \"See? Helping others makes me feel 4._▲_.\"\\nI think Tom is right. True happiness comes from a kind 5._▲_ and a warm heart.\\n1. A. sad B. happy C. angry D. tired\\n2. A. buy B. sell C. give D. get\\n3. A. forget B. remember C. stop D. hesitate\\n4. A. bored B. worried C. great D. lonely\\n5. A. hand B. head C. foot D. eye"
     }
 ]
