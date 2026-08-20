@@ -259,8 +259,8 @@ class SwiftTUI {
         setColor(color)
         if content.contains("\n") {
             let contents = content.split(separator: "\n", omittingEmptySubsequences: false)
-            for con in contents {
-                Text(con, x: x, color: color)
+            for (index, con) in contents.enumerated() {
+                Text(String(con), x: x, color: color, nextLine: (index == contents.count-1 && nextLine) || (index != content.count-1))
             }
         } else {
             print(content, terminator: "")
@@ -278,6 +278,7 @@ class SwiftTUI {
         Text(title, color: .title)
         Text("")
 
+        let firstY: Int = Int(nowY)
         for (index, item) in items.enumerated() {
             if index == 0 {
                 Text(item, color: .cyan)
@@ -287,7 +288,7 @@ class SwiftTUI {
         }
         Text("")
         Text("↑↓ 移动高亮项 | ↩ 选择", color: .info)
-        moveTo(x: Int16(getWidth(items[0])), y: 2)
+        moveTo(x: Int16(getWidth(items[0])), y: Int16(firstY))
 
         while true {
             let key = readKey()
@@ -295,15 +296,15 @@ class SwiftTUI {
             switch key {
             case .arrowUp:
                 if selected > 0 {
-                    Text(items[selected], x: 0, y: Int16(selected+2), nextLine: false)
+                    Text(items[selected], x: 0, y: Int16(selected+firstY), nextLine: false)
                     selected -= 1
-                    Text(items[selected], x: 0, y: Int16(selected+2), color: .cyan, nextLine: false)
+                    Text(items[selected], x: 0, y: Int16(selected+firstY), color: .cyan, nextLine: false)
                 }
             case .arrowDown:
                 if selected < items.count-1 {
-                    Text(items[selected], x: 0, y: Int16(selected+2), nextLine: false)
+                    Text(items[selected], x: 0, y: Int16(selected+firstY), nextLine: false)
                     selected += 1
-                    Text(items[selected], x: 0, y: Int16(selected+2), color: .cyan, nextLine: false)
+                    Text(items[selected], x: 0, y: Int16(selected+firstY), color: .cyan, nextLine: false)
                 }
             case .enter:
                 clean()
