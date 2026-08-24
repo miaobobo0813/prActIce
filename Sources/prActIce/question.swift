@@ -280,12 +280,12 @@ func findUnitName(unit: Unit) -> String {
 let scope: [Grade: [Subject: [Int: String]]] = [
     .A7: [
         .Chinese: [
-            1: "第一单元", 
-            2: "第二单元", 
-            3: "第三单元", 
-            4: "第四单元", 
-            5: "第五单元", 
-            6: "第六单元"
+            1: "阅读：(1 春   2 济南的冬天   3* 雨的四季   4 古代诗歌四首(观沧海 次北固山下 闻王昌龄左迁龙标遥有此寄 天净沙·秋思))重视朗读，在朗读中感受语言的美；把握好重音和停连，体会声韵和节奏；边读边想象文中描绘的画面，领略景物之美；注意揣摩和品味语言，体会比喻和拟人等修辞手法的表达效果。写作：热爱写作，学会观察", 
+            2: "阅读：(5 秋天的怀念   6 散步   7* 散文诗二首(金色花 荷叶·母亲)   8 《世说新语》二则(咏雪 陈太丘与友期行))通过朗读体会作者的情感，理解作品或直接或含蓄的表达。朗读时，要把握文章的感情基调，注意语气、节奏的变化；要在整体感知全文内容的基础上，理解作品中的形象，体会作者的思想感情。写作：学会记事", 
+            3: "阅读：(9 从百草园到三味书屋   10 往事依依   11* 再塑生命的人   12 《论语》十二章   课外古诗词诵读(峨眉山月歌 江南逢李龟年 行军九日思长安故园 夜上受降城闻笛))在默读中把握文章中心和主要内容。默读时要做到集中注意力，一口气读完全文，保证阅读感知的完整性和一定的阅读速度；要通过标题、开头、结尾及文中的关键语句等，梳理文章内容，了解文章大意，概括文章中心。写作：学会突出中心 整本书阅读：《朝花夕拾》 精读、略读、浏览", 
+            4: "阅读：(13 纪念白求恩   14 回忆我的母亲   15* 梅岭三章   16 诫子书)在默读中领会作品诠释的人生意义和价值，获得思想启迪。默读时，可以在课本上勾画关键语句，并在你感兴趣或有疑惑的地方作标注；要在整体把握文意的基础上，学会通过划分段落层次、抓关键语句等方法，理清作者思路。写作：思路要清晰", 
+            5: "阅读：(17 猫   18 我的白鸽   19 大雁归来   20 狼)1. 文章的内容、意蕴往往是多层次、多方面的。学习本单元，要聚焦于“人与动物的关系”这一主题，把握文章的基本立场和态度。2. 要关注细节。细节既有对文中人物的语言、动作、心理的描写，也有对所写动物的形态、行为的描写，还有对环境、气氛的描写。精到的细节描写不仅能让文章更生动、更细腻，也能让文章的意蕴更丰富、更具体。抓住有意味的细节深入品析，能够更好地体会文章中个性化的思考和情感表达。3. 各篇文章具体讲述了与某些特定动物的相处，其中却往往蕴含着更普遍的含义，透露出作者对自然、生命以及人类自身存在状态的感悟，要注意结合文中抒发情感、发表见解的语句，透过具体的情节、形象深入体会。4. 充分运用圈点勾画、写批注、作摘录等阅读方法。可以重点关注：(1) 集中表达作者思想观点或情感态度的 (2) 在文章的结构上起重要作用的 (3) 在语言表达上有精彩之处的 (4) 对你有启发和触动，或让你有疑问的 5. 阅读是心灵的沟通。阅读本单元的文章，要在准确全面地把握文章观点的基础上，尝试与文章展开“对话”，在观点的交流和碰撞中深化自己对人与动物关系的认识。注意结合自己与动物相处的真实经历和体验，提出个性化的观点。写作：记叙与动物的相处", 
+            6: "阅读：(21 小圣施威降大圣   22 皇帝的新装   23* 女娲造人   24 寓言四则(赫耳墨斯和雕像者 蚊子和狮子 穿井得一人 杞人忧天))在默读中把握作者思路，调动自己的体验，发挥联想和想象，感受文学的奇思妙想。默读时，应尽量增加一次性进入视野的文字数量，寻找关键词语以带动整体阅读，提高阅读速度，力争每分钟不少于 400 字。写作：发挥联想和想象 整本书阅读：《西游记》"
         ], 
         .Math: [
             1: "第1章 有理数", 
@@ -297,18 +297,18 @@ let scope: [Grade: [Subject: [Int: String]]] = [
         ], 
         .English: [
             1: "nouns; numbers; articles; simple present tense; simple future tense; there be structure; basic sentence structures; adjectives", 
-            2: "Understanding a famous saying; Pronouns; Phonetics: Pronunciation: /α:/ /æ/ /e/; Describing problems", 
-            3: "Understanding the characters' feelings; Simple present tense; Phonetics: Pronunciation: /i:/ /ɪ/ /i/; Expressing cause and effect; Recalling your own experience", 
-            4: "Making comments about a character; Possessive nouns; Phonetics: Pronunciation: /u:/ /ʊ/ /ʌ/; Listening for examples; Softening language; Finding the writer's idea", 
-            5: "Unit 4 Time to celebrate", 
-            6: "Unit 5 The power of plants", 
-            7: "Unit 6 Fantastic friends"
+            2: "Understanding a famous saying; Pronouns; Phonetics: Pronunciation: /αː/ /æ/ /e/; Describing problems", 
+            3: "Understanding the characters' feelings; Simple present tense; Phonetics: Pronunciation: /iː/ /ɪ/ /i/; Expressing cause and effect; Recalling your own experience", 
+            4: "Making comments about a character; Possessive nouns; Phonetics: Pronunciation: /uː/ /ʊ/ /ʌ/; Listening for examples; Softening language; Finding the writer's idea", 
+            5: "Exploring differences; Adverbs of frequency; Phonetics: Prounciation: /ɔː/ /ɒ/; Agreeing and disagreeing; Drawing conclusions from experiences", 
+            6: "Understanding a pun; Simple future tense; Phonetics: Prounciation: /eɪ/ /aɪ/ /ɔɪ/; Asking for and giving permission", 
+            7: "Understanding people's thoughts and feelings; Present continuous tense; Phonetics: Prounciation: /ɜː/ /ə/; Preparing to listen; Asking questions to find out information; Understanding the writing purpose"
         ], 
         .Science: [
-            1: "第1章 探索自然的科学", 
-            2: "第2章 科学并不神秘", 
-            3: "第3章 广袤浩瀚的宇宙", 
-            4: "第4章 多种多样的运动", 
+            1: "(1 科学并不神秘   2 科学测量   3 象科学家那样探究)地球上的生命是如何产生的？全球气候变暖该怎么解决？人工智能会彻底取代人类吗？......人类有太多的问题需要回答，科学家已解决了很多，但仍然有很多问题有待于人们去解决，而且现在或今后还会不断地出现新的问题。科学就是发现规律，解决自然和人类遇到的各种问题。科学存在于我们的周围。我们需要具备基本的科学知识，懂得科学原理，探索科学的奥秘，享受科学研究的乐趣。让我们一起感受科学的魅力！", 
+            2: "(1 生物体的基本单位    2 形形色色的植物   3 多姿多彩的动物   4 生物的分类   5 生物多样性)鹰击长空，鱼翔浅底。无论是在广袤的陆地、茫茫的大海，还是在辽阔的天空，都生活着各种各样的生物。从肉眼看不见的细菌到似乎无所不能的人类，在地球漫长的演化历史中，生命生生不息，世界丰富多彩。", 
+            3: "(1 认识地球   2 太阳系的组成与结构   3 人类对宇宙的探索)地球是人类赖以生存的家园，它是浩瀚宇宙中的一颗行星，与太阳系的其他行星、小行星、彗星等天体一起绕太阳运转。在太阳系以外更加空旷的空间，还分布着众多的天体，它们与太阳系一起构成了庞大的银河系。银河系也只是宇宙中上千亿个相互远离的星系中的普通一员。人们是如何认识地球、太阳系与宇宙的？对它们有着怎样的了解？", 
+            4: "(1 机械运动   2 地球的转动   3 日地月的相对运动   4 地球板块的缓慢运动)仰望天空，斗转星移，流星划破静谧的夜空，火箭把飞船送到遥远的天穹；俯视大地，万家灯火，风吹草动，蝴蝶在花丛中翩翩起舞，蜗牛在小草中缓缓爬行......从非生命体到生命体，从浩瀚宇宙到微小粒子，一切物体都在不断地运动。运动有哪些形式？人们如何描述运动？", 
             5: "第5章 探索技术与工程的世界"
         ], 
         .History: [
