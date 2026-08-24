@@ -494,3 +494,7 @@ let scope: [Grade: [Subject: [Int: String]]] = [
         ]
     ]
 ]
+
+func getScope(unit: Unit) -> String {
+    return scope[unit.grade]?[unit.subject]?[unit.unit] ?? "未知范围"
+}

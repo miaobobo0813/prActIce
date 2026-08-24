@@ -65,7 +65,8 @@ func CallQues(unit: Unit, type: quesType) async throws -> String {
         URLQueryItem(name: "grade", value: unit.grade.rawValue),
         URLQueryItem(name: "subject", value: transSubject[unit.subject] ?? String(describing: unit.subject)),
         URLQueryItem(name: "unit", value: findUnitName(unit: unit)),
-        URLQueryItem(name: "type", value: type.rawValue)
+        URLQueryItem(name: "type", value: type.rawValue), 
+        URLQueryItem(name: "scope", value: getScope(unit: unit))
     ]
 
     guard let httpURL = components.url else {

@@ -111,9 +111,9 @@ def normalize_grade_output(raw_text: str) -> str:
 
 
 @service.get("/ques")
-async def quesAPI(grade: str, subject: str, unit: str, type: str):
+async def quesAPI(grade: str, subject: str, unit: str, type: str, scope: str):
     tokenizer, model = get_model_pair(is_grade_model=False)
-    instruction = f"学科：{subject}，年级：{grade[1]}年级{'上册' if grade[0] == 'A' else '下册'}，单元：{unit}，题型：{type}"
+    instruction = f"学科：{subject}，年级：{grade[1]}年级{'上册' if grade[0] == 'A' else '下册'}，单元：{unit}，题型：{type}，范围：{scope}"
     messages = [
         {
             "role": "system",
