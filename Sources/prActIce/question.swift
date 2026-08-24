@@ -352,10 +352,10 @@ let scope: [Grade: [Subject: [Int: String]]] = [
         .English: [
             1: "Understanding others' views; Simple past tense; Phonetics: Pronunciation: /ɘʊ/ /aʊ/; Giving examples; Reflecting on the writer's purpose", 
             2: "Understanding the title of a passage; Indefinite pronouns; Phonetics: Pronunciation: /ɪɘ/ /eɘ/ /ʊɘ/; Giving positive replies; Understanding the story behind", 
-            3: "Unit 3 Food matters", 
-            4: "Unit 4 The art of having fun", 
-            5: "Unit 5 Amazing nature", 
-            6: "Unit 6 Hitting the road"
+            3: "Thinking about similar experiences; Linking verbs; Phonetics: Pronunciation: /p/ /b/ /t/ /d/; Correcting false information; Expressing agreement or disagreement", 
+            4: "Thinking rationally; Imperatives; Phonetics: Pronunciation: /k/ /g/ /f/ /v/; Asking for details; Understanding the theme of a passage", 
+            5: "Discovering beautiful things around you; Comparatives and superlatives; Phonetics: Pronunciation: /s/ /z/ /θ/ /ð/; Interrupting politely; Thinking from different sides", 
+            6: "Understanding the main idea of a passage via the title; as ... as; Phonetics: Pronunciation: /ʃ/ /ʒ/ /tʃ/ /dʒ/; Expressing surprise; Making comments on a person"
         ], 
         .Science: [
             1: "第1章 生物的结构与生殖", 
