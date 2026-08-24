@@ -350,8 +350,8 @@ let scope: [Grade: [Subject: [Int: String]]] = [
             6: "第6章 数据与统计图表"
         ], 
         .English: [
-            1: "Unit 1 The secrets of happiness", 
-            2: "Unit 2 Go for it!", 
+            1: "Understanding others' views; Simple past tense; Phonetics: Pronunciation: /ɘʊ/ /aʊ/; Giving examples; Reflecting on the writer's purpose", 
+            2: "Understanding the title of a passage; Indefinite pronouns; Phonetics: Pronunciation: /ɪɘ/ /eɘ/ /ʊɘ/; Giving positive replies; Understanding the story behind", 
             3: "Unit 3 Food matters", 
             4: "Unit 4 The art of having fun", 
             5: "Unit 5 Amazing nature", 
