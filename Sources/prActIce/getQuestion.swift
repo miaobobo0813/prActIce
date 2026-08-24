@@ -18,7 +18,7 @@ enum CallError: Error {
     case decodingFailed
 }
 
-struct GradeScoreResult {
+struct GradeScoreResult: Codable {
     let scoreText: String
     let isFullScore: Bool
 

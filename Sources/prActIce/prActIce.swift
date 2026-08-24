@@ -133,7 +133,7 @@ struct prActIce {
                     }
                     tui.Text("题目：\(ques)")
                     let userAns = tui.TextField("你的答案")
-                    var scoreResult = GradeScoreResult(scoreText: "0/1", isFullScore: false)
+                    var scoreResult = GradeScoreResult(scoreText: "1/1", isFullScore: true)
                     await tui.LoadingSpinner(title: "正在批改...", done: "批改完成", until: {
                         do {
                             scoreResult = try await gradeQues(ques: ques, answer: userAns)
@@ -159,7 +159,7 @@ struct prActIce {
                         tui.Text("由于发生未知错误，请稍后重试。详细信息：\(errorMessage)", color: .error)
                         continue
                     }
-                    let questionQues = Question(question: ques, isWrong: !scoreResult.isFullScore, userAnswer: userAns, unit: Unit(grade: grade, subject: sub, unit: unit+1), type: type)
+                    let questionQues = Question(question: ques, isWrong: !scoreResult.isFullScore, userAnswer: userAns, unit: Unit(grade: grade, subject: sub, unit: unit+1), type: type, score: scoreResult)
                     if scoreResult.isFullScore {
                         tui.Text("✓ 正确（\(scoreResult.scoreText)）", color: .success)
                     } else {
@@ -188,12 +188,12 @@ struct prActIce {
                         })
                         let select = tui.List(showPracticeList, title: "选择要回顾的题目")
                         if practiceList[select].isWrong {
-                            let option = tui.List(["攻击错题！", "这超纲了啊……", "返回列表", "回到开始页面"], title: "\(practiceList[select].question) ✕ 在错题本中")
+                            let option = tui.List(["攻击错题！", "这超纲了啊……", "返回列表", "回到开始页面"], title: "\(practiceList[select].question) \n✕ 在错题本中 \n你的答案: \(practiceList[select].userAnswer) (\(practiceList[select].score.scoreText))")
                             switch option {
                             case 0:
                                 tui.Text(practiceList[select].question, color: .title)
                                 let ans = tui.TextField("订正")
-                                var scoreResult = GradeScoreResult(scoreText: "0/1", isFullScore: false)
+                                var scoreResult = GradeScoreResult(scoreText: "1/1", isFullScore: true)
                                 var isError = false, errorMessage = ""
                                 await tui.LoadingSpinner(title: "正在批改...", done: "批改完成", until: {
                                     do {
@@ -224,11 +224,13 @@ struct prActIce {
                                     tui.Text("✓ 正确（\(scoreResult.scoreText)）", color: .success)
                                     tui.Text("错题被击败", color: .info)
                                     practiceList[select].isWrong = false
+                                    practiceList[select].score = scoreResult
                                     practiceStore.save(practiceList)
                                 } else {
                                     tui.Text("✕ 错误（\(scoreResult.scoreText)）", color: .error)
                                     tui.Text("攻击失败", color: .info)
                                     practiceList[select].userAnswer = ans
+                                    practiceList[select].score = scoreResult
                                     practiceStore.save(practiceList)
                                 }
                                 isBack = false
@@ -251,7 +253,7 @@ struct prActIce {
                                 isBack = false
                             }
                         } else {
-                            let option = tui.List(["返回列表", "回到开始页面"], title: "\(practiceList[select].question) ✓ 正确/订正对")
+                            let option = tui.List(["返回列表", "回到开始页面"], title: "\(practiceList[select].question) \n✓ 正确/订正对\n你的答案: \(practiceList[select].question)")
                             switch option {
                             case 0:
                                 isBack = true

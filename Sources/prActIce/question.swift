@@ -44,6 +44,7 @@ struct Question: Codable, Identifiable {
     var userAnswer: String
     var unit: Unit
     var type: quesType
+    var score: GradeScoreResult
 }
 
 let transSubject: [Subject: String] = [
