@@ -63,7 +63,7 @@ struct prActIce {
         }
         
         while true {
-            let options = ["做题", "回顾", "退出(你可能需要再手动关闭窗口)", "清空练习册并退出(危险)"]
+            let options = ["做题", "回顾", "复习", "退出(你可能需要再手动关闭窗口)", "清空练习册并退出(危险)"]
             let choice = tui.List(options, title: "欢迎来到prActIce。选择一个选项以继续。")
 
             switch choice {
@@ -268,9 +268,32 @@ struct prActIce {
                 tui.Text("按下任意键以回到开始页面...", color: .info)
                 tui.waitKey()
             case 2:
+                let subjects = ["语文", "数学", "英语", "科学", "历史", "道德与法治", "地理"]
+                let transSubjects: [Subject] = [.Chinese, .Math, .English, .Science, .History, .EthicsAndTheRuleOfLaw, .Geography]
+                let choiceSub = tui.List(subjects, title: "选择学科")
+                let sub = transSubjects[choiceSub]
+                let grades = ["七年级上册", "七年级下册", "八年级上册", "八年级下册"]
+                let transGrades: [Grade] = [.A7, .B7, .A8, .B8]
+                let choiceGrade = tui.List(grades, title: "选择年级")
+                let grade = transGrades[choiceGrade]
+                var units: [String] = []
+                await tui.LoadingSpinner(title: "正在加载...", done: "✓ 加载完成", until: {
+                    units = unitDic[grade]?[sub]?
+                        .sorted(by: { $0.key < $1.key })
+                        .map { $0.value } ?? []
+                })
+                let unit = tui.List(units, title: "选择单元")
+                var scope = ""
+                await tui.LoadingSpinner(title: "正在加载...", done: "✓ 加载完成", until: {
+                    scope = getScope(unit: Unit(grade: grade, subject: sub, unit: unit))
+                }, doneColor: .info)
+                tui.Text(scope)
+                tui.Text("按下任意键以回到开始页面...", color: .info)
+                tui.waitKey()
+            case 3:
                 practiceStore.save(practiceList)
                 return
-            case 3:
+            case 4:
                 tui.Text("危险！此操作不可撤销。", color: .title)
                 tui.Text("完整输入下方文字以继续。")
                 let agree = "Yes, I want to clean my practice book."
