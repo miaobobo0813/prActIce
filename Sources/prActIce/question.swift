@@ -400,12 +400,12 @@ let scope: [Grade: [Subject: [Int: String]]] = [
             5: "第5章 一次函数"
         ], 
         .English: [
-            1: "Unit 1 This is me", 
-            2: "Unit 2 Getting along", 
-            3: "Unit 3 Make it happen!", 
-            4: "Unit 4 Digital life", 
-            5: "Unit 5 Play by the rules?", 
-            6: "Unit 6 When disaster strikes"
+            1: "Supporting your ideas with examples; Present perfect tense (1); Phonetics: Pronunciation: /m/ /n/ /ŋ/; Making comments on a book; Making connections; Writing about a successful person", 
+            2: "Comparing before drawing a conclusion; Present perfect tense (2); Phonetics: Pronunciation: /h/; Offering comfort; Understanding quotes; Writing a short story about understanding between people", 
+            3: "Understanding the influence of something; Infintive and -ing as aobject; Phonetics: Pronunciation: /l/ /r/; Opening a talk; Thinking about the importance of curiosity; Writing an example about the power of curiosity", 
+            4: "Thinking about reasons; Infinitive as object complement; Phonetics: Pronunciation: /w/ /j/; Describing thoughts and feelings; Making predictions; Writing a short passage to describe school life in 50 yesrs' time", 
+            5: "Predicting the follow-up of a story; Infinitive of purpose; Phonetics: Pronunciation: /bl/ /pl/ /kl/ /fl/; Debating; Understanding the writer's purpose; Writing a rule list for new things of modern life", 
+            6: "Exploring historical truth; Past continuous tense; Phonetics: Pronunciation: /br/ /fr/; Making comments on a person; Thinking about effects; Writing a heart-warming story after a natural disaster"
         ], 
         .Science: [
             1: "(1 感觉世界   2 声与听觉   3 声音的特性与应用   4 光的反射与折射   5 透镜和视觉)鲜花吐芬芳，杨柳抚脸颊 ；泉水响叮咚，乐曲绕山梁......此情此景，令人心旷神怡。眼能感知万物，耳可感知声音世界。人的身体中有哪些感觉器官？它们具有怎样的感觉功能？它们是怎样感觉周围环境的呢？如果失去了感觉，人们的生活将会怎样", 
@@ -454,12 +454,12 @@ let scope: [Grade: [Subject: [Int: String]]] = [
             5: "第5章 特殊平行四边形"
         ], 
         .English: [
-            1: "Unit 1 Career talks", 
-            2: "Unit 2 Growing pains and gains", 
-            3: "Unit 3 What makes a great team?", 
-            4: "Unit 4 Helping out", 
-            5: "Unit 5 Looking into nature", 
-            6: "Unit 6 Living with nature"
+            1: "Reading between the lines; Passive in the simple present and the simple future; Pronunciation: /sk/ /sm/ /sp/ /st/; Asking open qestions and follow-up questions in an interview; Evaluating comments; Writing a short passage about “a job soon to be history” and “a job of the future”", 
+            2: "Giving good advice; Passive in the simple past; Phonetics: Pronunciation: /str/ /spr/ /skr/; Introducing personal stories; Predicting the writer's feelings; Writing a passage about a time of failure in your life", 
+            3: "Putting yourself in others' shoes; Modals (1); Phonetics: Pronunciation: /kw/; Taking notes; Giving suggestions; Forming your own understanding; Writing a story about another great team", 
+            4: "Understanding the writers' feelings; Modal (2); Phonetics: Loss of plosion; Checking background knowledge; Understanding cause and effect; Writing a story about a person passing on help", 
+            5: "Understanding writing styles; Object clauses (1); Phonetics: Stress in words (1); Talking about possibilities; Understanding the title of a passage; Writing a story about a nature explorer", 
+            6: "Understanding the importance of the 24 Solar Terms; Object clauses (2); Stress in words (2); Listening for questions; Drawing listeners' interest; Comparing advantages and disadvantages; Writing a passage about how people change nature"
         ], 
         .Science: [
             1: "(1 空气的成分   2 燃烧的奥秘   3 化学反应中物质质量的关系   4 保护我们呼吸的空气)空气是生物生存的必要条件。动植物的呼吸、植物的光合作用都离不开空气，没有空气就没有生命，就没有生机勃勃的地球。空气由哪些成分组成？这些物质与人类的生活和生产有着怎样的联系？人类的活动会改变空气的成分吗？我们应怎样保护空气使其免受污染呢？", 
