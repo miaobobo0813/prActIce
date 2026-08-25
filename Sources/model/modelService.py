@@ -124,7 +124,7 @@ async def quesAPI(grade: str, subject: str, unit: str, type: str, scope: str):
     try:
         text = tokenizer.apply_chat_template(messages, tokenize=False, generation_prompt=True)
         modelInputs = tokenizer([text], return_tensors="pt").to(model.device)
-        generatedIDs = model.generate(**modelInputs, max_new_tokens=512)
+        generatedIDs = model.generate(**modelInputs, max_new_tokens=1024)
         return {"text": decode_generated_text(tokenizer, modelInputs, generatedIDs)}
     except Exception as exc:
         raise HTTPException(status_code=500, detail=f"出题失败: {exc}") from exc
@@ -144,7 +144,7 @@ async def gradeAPI(ques: str, userAns: str):
     try:
         text = tokenizer.apply_chat_template(messages, tokenize=False, generation_prompt=True)
         modelInputs = tokenizer([text], return_tensors="pt").to(model.device)
-        generatedIDs = model.generate(**modelInputs, max_new_tokens=512)
+        generatedIDs = model.generate(**modelInputs, max_new_tokens=1024)
         raw_text = decode_generated_text(tokenizer, modelInputs, generatedIDs)
         return {"text": normalize_grade_output(raw_text)}
     except Exception as exc:

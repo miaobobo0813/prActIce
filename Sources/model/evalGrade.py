@@ -32,7 +32,7 @@ for data in valData:
         {"role": "assistant", "content": output}
     ]
     fullText = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=False)
-    inputID = tokenizer(fullText, truncation=True, max_length=512)["input_ids"]
+    inputID = tokenizer(fullText, truncation=True, max_length=1024)["input_ids"]
     promptText = tokenizer.apply_chat_template(messages[:-1], tokenize=False, add_generation_prompt=True)
     promptIDs = tokenizer(promptText, add_special_tokens=False)["input_ids"]
     labels = inputID.copy()
