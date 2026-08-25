@@ -63,7 +63,7 @@ struct prActIce {
         }
         
         while true {
-            let options = ["做题", "回顾", "复习", "退出(你可能需要再手动关闭窗口)", "清空练习册并退出(危险)"]
+            let options = ["做题", "回顾", "内容", "退出(你可能需要再手动关闭窗口)", "清空练习册并退出(危险)"]
             let choice = tui.List(options, title: "欢迎来到prActIce。选择一个选项以继续。")
 
             switch choice {
@@ -268,6 +268,11 @@ struct prActIce {
                 tui.Text("按下任意键以回到开始页面...", color: .info)
                 tui.waitKey()
             case 2:
+                tui.Text("内容", color: .title)
+                tui.Text("本功能将显示各个单元要掌握的内容。")
+                tui.Text("来源: 课本", color: .info)
+                tui.Text("按任意键继续...", color: .info)
+                tui.waitKey()
                 let subjects = ["语文", "数学", "英语", "科学", "历史", "道德与法治", "地理"]
                 let transSubjects: [Subject] = [.Chinese, .Math, .English, .Science, .History, .EthicsAndTheRuleOfLaw, .Geography]
                 let choiceSub = tui.List(subjects, title: "选择学科")
@@ -285,7 +290,7 @@ struct prActIce {
                 let unit = tui.List(units, title: "选择单元")
                 var scope = ""
                 await tui.LoadingSpinner(title: "正在加载...", done: "✓ 加载完成", until: {
-                    scope = getScope(unit: Unit(grade: grade, subject: sub, unit: unit))
+                    scope = getScope(unit: Unit(grade: grade, subject: sub, unit: unit+1))
                 }, doneColor: .info)
                 tui.Text(scope)
                 tui.Text("按下任意键以回到开始页面...", color: .info)
