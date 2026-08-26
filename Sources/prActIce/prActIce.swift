@@ -73,6 +73,7 @@ struct prActIce {
                 tui.Text("来源: QGIntelligence", color: .info)
                 tui.Text("按任意键继续...", color: .info)
                 tui.waitKey()
+                tui.clean()
                 let subjects = ["语文", "数学", "英语", "科学", "历史", "道德与法治", "地理"]
                 let transSubjects: [Subject] = [.Chinese, .Math, .English, .Science, .History, .EthicsAndTheRuleOfLaw, .Geography]
                 let choiceSub = tui.List(subjects, title: "选择学科")
@@ -185,6 +186,7 @@ struct prActIce {
                 tui.Text("本功能将显示一个包含你所练习过的所有题目的列表。你可以在这里订正错题。")
                 tui.Text("按任意键继续...", color: .info)
                 tui.waitKey()
+                tui.clean()
                 tui.Text("回顾", color: .title)
                 if !practiceList.isEmpty {
                     var isBack = true
@@ -282,6 +284,7 @@ struct prActIce {
                 tui.Text("来源: 课本", color: .info)
                 tui.Text("按任意键继续...", color: .info)
                 tui.waitKey()
+                tui.clean()
                 let subjects = ["语文", "数学", "英语", "科学", "历史", "道德与法治", "地理"]
                 let transSubjects: [Subject] = [.Chinese, .Math, .English, .Science, .History, .EthicsAndTheRuleOfLaw, .Geography]
                 let choiceSub = tui.List(subjects, title: "选择学科")

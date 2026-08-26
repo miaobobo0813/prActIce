@@ -252,11 +252,24 @@ class SwiftTUI {
         }
     }
 
-    public func Text(_ content: String, x: Int16? = nil, y: Int16? = nil, color: Color = .white, nextLine: Bool = true){
+    public func Text(_ oldContent: String, x: Int16? = nil, y: Int16? = nil, color: Color = .white, nextLine: Bool = true){
         if let x=x, let y=y {
             moveTo(x: x, y: y)
         }
         setColor(color)
+        var cabi = CONSOLE_SCREEN_BUFFER_INFO()
+        guard GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cabi) else {
+            print(oldContent, terminator: "")
+            return 
+        }
+        let maxWidth = cabi.dwSize.X
+        var content = ""
+        for char in oldContent {
+            if getWidth(String(content.split(separator: "\n").last ?? String.SubSequence(content)))+getWidth(String(char)) > maxWidth {
+                content += "\n"
+            }
+            content += String(char)
+        }
         if content.contains("\n") {
             let contents = content.split(separator: "\n", omittingEmptySubsequences: false)
             for (index, con) in contents.enumerated() {
