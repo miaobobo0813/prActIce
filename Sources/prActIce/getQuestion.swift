@@ -13,7 +13,7 @@ enum InitIntelligenceError: Error {
 
 enum CallError: Error {
     case invalidURL
-    case requestFailed
+    case requestFailed(details: String)
     case invalidResponse
     case decodingFailed
 }
@@ -56,25 +56,24 @@ func parseGradeScoreText(_ text: String) -> GradeScoreResult? {
 }
 
 func CallQues(unit: Unit, type: quesType) async throws -> String {
-    var components = URLComponents()
-    components.scheme = "http"
-    components.host = "127.0.0.1"
-    components.port = 8000
-    components.path = "/ques"
-    components.queryItems = [
-        URLQueryItem(name: "grade", value: unit.grade.rawValue),
-        URLQueryItem(name: "subject", value: transSubject[unit.subject] ?? String(describing: unit.subject)),
-        URLQueryItem(name: "unit", value: findUnitName(unit: unit)),
-        URLQueryItem(name: "type", value: type.rawValue), 
-        URLQueryItem(name: "scope", value: getScope(unit: unit))
-    ]
-
-    guard let httpURL = components.url else {
+    guard let httpURL = URL(string: "http://127.0.0.1:8000/ques") else {
         throw CallError.invalidURL
     }
 
+    let requestBody: [String: String] = [
+        "grade": unit.grade.rawValue,
+        "subject": transSubject[unit.subject] ?? String(describing: unit.subject),
+        "unit": findUnitName(unit: unit),
+        "type": type.rawValue,
+        "scope": getScope(unit: unit)
+    ]
+    var request = URLRequest(url: httpURL)
+    request.httpMethod = "POST"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.httpBody = try JSONEncoder().encode(requestBody)
+
     do {
-        let (data, response) = try await URLSession.shared.data(from: httpURL)
+        let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             throw CallError.invalidResponse
         }
@@ -83,29 +82,25 @@ func CallQues(unit: Unit, type: quesType) async throws -> String {
             return text
         }
     } catch {
-        throw CallError.requestFailed
+        throw CallError.requestFailed(details: error.localizedDescription)
     }
 
     throw CallError.decodingFailed
 }
 
 func CallGrade(ques: String, userAns: String) async throws -> GradeScoreResult {
-    var components = URLComponents()
-    components.scheme = "http"
-    components.host = "127.0.0.1"
-    components.port = 8000
-    components.path = "/grade"
-    components.queryItems = [
-        URLQueryItem(name: "ques", value: ques),
-        URLQueryItem(name: "userAns", value: userAns)
-    ]
-
-    guard let httpURL = components.url else {
+    guard let httpURL = URL(string: "http://127.0.0.1:8000/grade") else {
         throw CallError.invalidURL
     }
 
+    let requestBody = ["ques": ques, "userAns": userAns]
+    var request = URLRequest(url: httpURL)
+    request.httpMethod = "POST"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.httpBody = try JSONEncoder().encode(requestBody)
+
     do {
-        let (data, response) = try await URLSession.shared.data(from: httpURL)
+        let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             throw CallError.invalidResponse
         }
@@ -115,7 +110,7 @@ func CallGrade(ques: String, userAns: String) async throws -> GradeScoreResult {
             return scoreResult
         }
     } catch {
-        throw CallError.requestFailed
+        throw CallError.requestFailed(details: error.localizedDescription)
     }
 
     throw CallError.decodingFailed
@@ -178,7 +173,7 @@ func InitIntelligence() async throws {
 
 func checkServiceStatus() async throws {
     let healthURL = URL(string: "http://127.0.0.1:8000/test")!
-    let deadline = Date().addingTimeInterval(360)
+    let deadline = Date().addingTimeInterval(180)
 
     while Date() < deadline {
         if await ServiceStatus.shared.isError {

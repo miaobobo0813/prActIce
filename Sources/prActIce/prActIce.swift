@@ -52,7 +52,7 @@ struct prActIce {
                 try await checkServiceStatus()
             } catch {
                 ServiceStatus.shared.isError = true
-                ServiceStatus.shared.errorMessage = "QGIntelligence服务未能启动。"
+                ServiceStatus.shared.errorMessage = "QGIntelligence服务未能启动。请检查网络后重试。"
                 return
             }
         }, doneColor: .info)
@@ -115,9 +115,9 @@ struct prActIce {
                     await tui.LoadingSpinner(title: "正在生成(\(i)/\(sum))...", done: "✓ 生成完成(\(i)/\(sum))", until: {
                         do {
                             ques = try await getQues(subject: sub, unit: Unit(grade: grade, subject: sub, unit: unit+1), type: type)
-                        } catch CallError.requestFailed {
+                        } catch CallError.requestFailed(let message) {
                             isError = true
-                            errorMessage = "服务请求失败。请稍后重试。"
+                            errorMessage = "服务请求失败。请稍后重试。详细信息: \(message)"
                         } catch CallError.invalidURL {
                             isError = true
                             errorMessage = "无法配置URL。"
@@ -143,9 +143,9 @@ struct prActIce {
                     await tui.LoadingSpinner(title: "正在批改...", done: "批改完成", until: {
                         do {
                             scoreResult = try await gradeQues(ques: ques, answer: userAns)
-                        } catch CallError.requestFailed {
+                        } catch CallError.requestFailed(let message) {
                             isError = true
-                            errorMessage = "服务请求失败。请稍后重试。"
+                            errorMessage = "服务请求失败。请稍后重试。详细信息: \(message)"
                         } catch CallError.invalidURL {
                             isError = true
                             errorMessage = "无法配置URL。"
@@ -209,9 +209,9 @@ struct prActIce {
                                 await tui.LoadingSpinner(title: "正在批改...", done: "批改完成", until: {
                                     do {
                                         scoreResult = try await gradeQues(ques: practiceList[select].question, answer: ans)
-                                    } catch CallError.requestFailed {
+                                    } catch CallError.requestFailed(let message) {
                                         isError = true
-                                        errorMessage = "服务请求失败。请稍后重试。"
+                                        errorMessage = "服务请求失败。请稍后重试。详细信息: \(message)"
                                     } catch CallError.invalidURL {
                                         isError = true
                                         errorMessage = "无法配置URL。"

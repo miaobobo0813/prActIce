@@ -9,6 +9,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
+from pydantic import BaseModel
 import uvicorn
 
 
@@ -45,6 +46,19 @@ tokenizerForGrade = None
 modelForGrade = None
 
 
+class QuestionRequest(BaseModel):
+    grade: str
+    subject: str
+    unit: str
+    type: str
+    scope: str
+
+
+class GradeRequest(BaseModel):
+    ques: str
+    userAns: str
+
+
 def load_models() -> None:
     global startup_error, tokenizerForQues, modelForQues, tokenizerForGrade, modelForGrade
 
@@ -73,12 +87,7 @@ def load_models() -> None:
         startup_error = f"模型加载失败: {exc}"
         raise
 
-
-try:
-    load_models()
-except Exception:
-    pass
-
+load_models()
 
 def get_model_pair(is_grade_model: bool):
     if is_grade_model:
@@ -110,14 +119,14 @@ def normalize_grade_output(raw_text: str) -> str:
     return "0/1"
 
 
-@service.get("/ques")
-async def quesAPI(grade: str, subject: str, unit: str, type: str, scope: str):
+@service.post("/ques")
+async def quesAPI(request: QuestionRequest):
     tokenizer, model = get_model_pair(is_grade_model=False)
-    instruction = f"学科：{subject}，年级：{grade[1]}年级{'上册' if grade[0] == 'A' else '下册'}，单元：{unit}，题型：{type}，范围：{scope}"
+    instruction = f"学科：{request.subject}，年级：{request.grade[1]}年级{'上册' if request.grade[0] == 'A' else '下册'}，单元：{request.unit}，题型：{request.type}，范围：{request.scope}"
     messages = [
         {
             "role": "system",
-            "content": "你是一个出卷老师，请按照科目、单元、年级、题型出题。choose代表选择/判断, fillBlank代表填空, answer代表实验探究/解答/综合。数学、科学使用浙教版，英语使用外研版，剩余科目使用人教版。只需出一题即可。",
+            "content": "你是一个出卷老师，请按照科目、单元、年级、题型出题。choose代表选择/判断, fillBlank代表填空, answer代表实验探究/解答/综合。数学、科学使用浙教版，英语使用外研版，剩余科目使用人教版。只需出一题即可。不需要给出答案。",
         },
         {"role": "user", "content": instruction},
     ]
@@ -130,10 +139,10 @@ async def quesAPI(grade: str, subject: str, unit: str, type: str, scope: str):
         raise HTTPException(status_code=500, detail=f"出题失败: {exc}") from exc
 
 
-@service.get("/grade")
-async def gradeAPI(ques: str, userAns: str):
+@service.post("/grade")
+async def gradeAPI(request: GradeRequest):
     tokenizer, model = get_model_pair(is_grade_model=True)
-    instruction = f"问题：{ques}，学生回答：{userAns}"
+    instruction = f"问题：{request.ques}，学生回答：{request.userAns}"
     messages = [
         {
             "role": "system",
