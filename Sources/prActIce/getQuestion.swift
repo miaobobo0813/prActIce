@@ -133,8 +133,8 @@ func InitIntelligence() async throws {
 
     guard let sysRoot = ProcessInfo.processInfo.environment["SystemRoot"] else { throw InitIntelligenceError.unknownError }
     let whereProcess = Process()
-    whereProcess.executableURL = URL(fileURLWithPath: "\(sysRoot)\\System32\\where.exe")
-    whereProcess.arguments = ["python"]
+    whereProcess.executableURL = URL(fileURLWithPath: "\(sysRoot)\\System32\\WindowsPowerShell\\v1.0\\powershell.exe")
+    whereProcess.arguments = ["-ExecutionPolicy", "Bypass", "-Command", "(Get-Command python).Source"]
     let pyPath = Pipe()
     whereProcess.standardOutput = pyPath
     whereProcess.standardError = pyPath
@@ -173,7 +173,7 @@ func InitIntelligence() async throws {
 
 func checkServiceStatus() async throws {
     let healthURL = URL(string: "http://127.0.0.1:8000/test")!
-    let deadline = Date().addingTimeInterval(180)
+    let deadline = Date().addingTimeInterval(480)
 
     while Date() < deadline {
         if await ServiceStatus.shared.isError {
