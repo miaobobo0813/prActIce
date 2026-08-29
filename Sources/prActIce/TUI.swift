@@ -262,26 +262,34 @@ class SwiftTUI {
             print(oldContent, terminator: "")
             return 
         }
-        let maxWidth = cabi.dwSize.X
-        var content = ""
+        let maxWidth = max(Int(cabi.dwSize.X), 1)
+        var lines = [String]()
+        var currentLine = ""
         for char in oldContent {
-            if getWidth(String(content.split(separator: "\n").last ?? String.SubSequence(content)))+getWidth(String(char)) > maxWidth {
-                content += "\n"
+            if char == "\n" {
+                lines.append(currentLine)
+                currentLine = ""
+                continue
             }
-            content += String(char)
+            let characterWidth = getWidth(String(char))
+            if !currentLine.isEmpty && getWidth(currentLine) + characterWidth > maxWidth {
+                lines.append(currentLine)
+                currentLine = ""
+            }
+            currentLine.append(char)
         }
-        if content.contains("\n") {
-            let contents = content.split(separator: "\n", omittingEmptySubsequences: false)
-            for (index, con) in contents.enumerated() {
-                Text(String(con), x: x, color: color, nextLine: (index == contents.count-1 && nextLine) || (index != content.count-1))
+        lines.append(currentLine)
+
+        for (index, line) in lines.enumerated() {
+            print(line, terminator: "")
+            if index < lines.count - 1 {
+                moveTo(x: 0, y: nowY < Int16.max ? nowY + 1 : 0)
             }
-        } else {
-            print(content, terminator: "")
         }
         fflush(stdout)
         resetColor()
         if nextLine {
-            moveTo(x: 0, y: nowY+1)
+            moveTo(x: 0, y: nowY < Int16.max ? nowY + 1 : 0)
         }
     }
     public func List(_ items: [String], title: String = "选择一个选项") -> Int {

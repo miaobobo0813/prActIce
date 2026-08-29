@@ -52,7 +52,9 @@ struct prActIce {
                 try await checkServiceStatus()
             } catch {
                 ServiceStatus.shared.isError = true
-                ServiceStatus.shared.errorMessage = "QGIntelligence服务未能启动。请检查网络后重试。"
+                if (ServiceStatus.shared.errorMessage == ""){
+                    ServiceStatus.shared.errorMessage = "QGIntelligence服务未能启动。请检查网络后重试。"
+                }
                 return
             }
         }, doneColor: .info)
