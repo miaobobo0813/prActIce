@@ -371,7 +371,9 @@ class SwiftTUI {
         var isTaskComplete = false
         Task {
             await until()
-            isTaskComplete = true
+            await MainActor.run {
+                isTaskComplete = true
+            }
         }
         while !isTaskComplete {
             Text(frame[nowFrame], x: 0, y: nowY, color: .info, nextLine: false)

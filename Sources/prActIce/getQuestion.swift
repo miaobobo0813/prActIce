@@ -54,6 +54,16 @@ struct GradeScoreResult: Codable {
     }
 }
 
+private let modelRequestTimeout: TimeInterval = 30 * 60
+
+private let modelURLSession: URLSession = {
+    let config = URLSessionConfiguration.default
+    config.timeoutIntervalForRequest = modelRequestTimeout
+    config.timeoutIntervalForResource = modelRequestTimeout
+    config.requestCachePolicy = .reloadIgnoringLocalCacheData
+    return URLSession(configuration: config)
+}()
+
 func parseGradeScoreText(_ text: String) -> GradeScoreResult? {
     let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
     let pattern = #"(?<!\d)(\d+)\s*/\s*(\d+)(?!\d)"#
@@ -81,6 +91,13 @@ func parseGradeScoreText(_ text: String) -> GradeScoreResult? {
     return nil
 }
 
+private func makeJSONRequest(url: URL, timeoutInterval: TimeInterval) -> URLRequest {
+    var request = URLRequest(url: url, timeoutInterval: timeoutInterval)
+    request.httpMethod = "POST"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    return request
+}
+
 func CallQues(unit: Unit, type: quesType) async throws -> String {
     guard let httpURL = URL(string: "http://127.0.0.1:8000/ques") else {
         throw CallError.invalidURL
@@ -93,13 +110,11 @@ func CallQues(unit: Unit, type: quesType) async throws -> String {
         "type": type.rawValue,
         "scope": getScope(unit: unit)
     ]
-    var request = URLRequest(url: httpURL)
-    request.httpMethod = "POST"
-    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    var request = makeJSONRequest(url: httpURL, timeoutInterval: modelRequestTimeout)
     request.httpBody = try JSONEncoder().encode(requestBody)
 
     do {
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await modelURLSession.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             throw CallError.invalidResponse
         }
@@ -107,6 +122,8 @@ func CallQues(unit: Unit, type: quesType) async throws -> String {
            let text = json["text"] as? String {
             return text
         }
+    } catch let error as URLError where error.code == .timedOut {
+        throw CallError.requestFailed(details: "模型生成超时。请稍后或在重启计算机后重试。")
     } catch {
         throw CallError.requestFailed(details: error.localizedDescription)
     }
@@ -120,13 +137,11 @@ func CallGrade(ques: String, userAns: String) async throws -> GradeScoreResult {
     }
 
     let requestBody = ["ques": ques, "userAns": userAns]
-    var request = URLRequest(url: httpURL)
-    request.httpMethod = "POST"
-    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    var request = makeJSONRequest(url: httpURL, timeoutInterval: modelRequestTimeout)
     request.httpBody = try JSONEncoder().encode(requestBody)
 
     do {
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await modelURLSession.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             throw CallError.invalidResponse
         }
@@ -135,6 +150,8 @@ func CallGrade(ques: String, userAns: String) async throws -> GradeScoreResult {
            let scoreResult = parseGradeScoreText(text) {
             return scoreResult
         }
+    } catch let error as URLError where error.code == .timedOut {
+        throw CallError.requestFailed(details: "评分服务超时，请稍后再试。")
     } catch {
         throw CallError.requestFailed(details: error.localizedDescription)
     }
@@ -142,7 +159,6 @@ func CallGrade(ques: String, userAns: String) async throws -> GradeScoreResult {
     throw CallError.decodingFailed
 }
 
-@MainActor
 func InitIntelligence() async throws {
     let bundle = Bundle.module
     guard let servicePath = bundle.path(forResource: "modelService", ofType: "py")
@@ -174,11 +190,12 @@ func InitIntelligence() async throws {
         throw InitIntelligenceError.pythonNotFound
     }
 
+    let pyLog = await MainActor.run { ServiceStatus.shared.pyLog }
     let pyProcess = Process()
     pyProcess.executableURL = URL(fileURLWithPath: String(pyPathString))
     pyProcess.arguments = [servicePath, modelPath]
-    pyProcess.standardOutput = ServiceStatus.shared.pyLog
-    pyProcess.standardError = ServiceStatus.shared.pyLog
+    pyProcess.standardOutput = pyLog
+    pyProcess.standardError = pyLog
     do {
         try pyProcess.run()
     } catch {
@@ -186,7 +203,7 @@ func InitIntelligence() async throws {
     }
 
     if !pyProcess.isRunning {
-        let errorData = ServiceStatus.shared.pyLog.fileHandleForReading.readDataToEndOfFile()
+        let errorData = await MainActor.run { pyLog.fileHandleForReading.readDataToEndOfFile() }
         let errorMessage = String(data: errorData, encoding: .utf8)
             ?? String(data: errorData, encoding: .windowsCP1252)
             ?? String(data: errorData, encoding: .isoLatin1)
@@ -195,25 +212,30 @@ func InitIntelligence() async throws {
     }
 }
 
+@MainActor
 func checkServiceStatus() async throws {
     let healthURL = URL(string: "http://127.0.0.1:8000/test")!
     let deadline = Date().addingTimeInterval(480)
 
     while Date() < deadline {
-        if await ServiceStatus.shared.isError {
+        if ServiceStatus.shared.isError {
             return
         }
+        print("Check! \(Date())")
         do {
-            let (data, response) = try await URLSession.shared.data(from: healthURL)
+            var request = URLRequest(url: healthURL, timeoutInterval: 8)
+            print("Got your Pawn! \(Date())")
+            request.httpMethod = "GET"
+            let (data, _) = try await URLSession.shared.data(from: healthURL)
+            print("And it's your queen! \(Date())")
+            let json = try JSONSerialization.jsonObject(with: data) as? [String: Bool]
 
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                try await Task.sleep(nanoseconds: 500_000_000)
-                continue
-            }
-
-            if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Bool], json["text"] == true {
+            if json?["text"] ?? false {
                 return
             }
+        } catch let error as URLError where error.code == .timedOut {
+            try await Task.sleep(nanoseconds: 500_000_000)
+            continue
         } catch {
             try await Task.sleep(nanoseconds: 500_000_000)
             continue

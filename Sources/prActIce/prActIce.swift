@@ -18,47 +18,50 @@ struct prActIce {
         let practiceStore = Persistance<[Question]>(filename: "practice.json")
         var practiceList: [Question] = practiceStore.read() ?? []
         let tui = SwiftTUI.shared
-        await tui.LoadingSpinner(title: "正在加载QGIntelligence...这可能花费数分钟...", done: "QGIntelligence加载完成。", until: {
-            Task.detached(priority: .background) {
-                do {
-                    try await InitIntelligence()
-                } catch InitIntelligenceError.pythonNotFound {
-                    await MainActor.run {
-                        ServiceStatus.shared.isError = true
-                        ServiceStatus.shared.errorMessage = "未能找到Python。请确保已安装Python，并添加到系统PATH中。"
-                    }
-                } catch InitIntelligenceError.unknownError {
-                    await MainActor.run {
-                        ServiceStatus.shared.isError = true
-                        ServiceStatus.shared.errorMessage = "发生未知错误。请检查网络连接或稍后重试。"
-                    }
-                } catch InitIntelligenceError.pyError(let message) {
-                    await MainActor.run {
-                        ServiceStatus.shared.isError = true
-                        ServiceStatus.shared.errorMessage = "QGIntelligence服务启动失败。\(message)\n这可能是因为网络引起的问题。"
-                    }
-                } catch InitIntelligenceError.fileNotFound(let fileName) {
-                    await MainActor.run {
-                        ServiceStatus.shared.isError = true
-                        ServiceStatus.shared.errorMessage = "未能找到文件：\(fileName)。重新安装prActIce可能会解决此问题。"
-                    }
-                } catch {
-                    await MainActor.run {
-                        ServiceStatus.shared.isError = true
-                        ServiceStatus.shared.errorMessage = "发生未知错误：\(error.localizedDescription)"
-                    }
+        Task(priority: .background) {
+            do {
+                try await InitIntelligence()
+            } catch InitIntelligenceError.pythonNotFound {
+                await MainActor.run {
+                    ServiceStatus.shared.isError = true
+                    ServiceStatus.shared.errorMessage = "未能找到Python。请确保已安装Python，并添加到系统PATH中。"
+                }
+            } catch InitIntelligenceError.unknownError {
+                await MainActor.run {
+                    ServiceStatus.shared.isError = true
+                    ServiceStatus.shared.errorMessage = "发生未知错误。请检查网络连接或稍后重试。"
+                }
+            } catch InitIntelligenceError.pyError(let message) {
+                await MainActor.run {
+                    ServiceStatus.shared.isError = true
+                    ServiceStatus.shared.errorMessage = "QGIntelligence服务启动失败。\(message)\n这可能是因为网络引起的问题。"
+                }
+            } catch InitIntelligenceError.fileNotFound(let fileName) {
+                await MainActor.run {
+                    ServiceStatus.shared.isError = true
+                    ServiceStatus.shared.errorMessage = "未能找到文件：\(fileName)。重新安装prActIce可能会解决此问题。"
+                }
+            } catch {
+                await MainActor.run {
+                    ServiceStatus.shared.isError = true
+                    ServiceStatus.shared.errorMessage = "发生未知错误：\(error.localizedDescription)"
                 }
             }
+        }
+        await tui.LoadingSpinner(title: "正在加载QGIntelligence...这可能花费数分钟...", done: "QGIntelligence加载完成。", until: {
             do {
                 try await checkServiceStatus()
             } catch {
                 ServiceStatus.shared.isError = true
                 if (ServiceStatus.shared.errorMessage == ""){
                     let errorData = ServiceStatus.shared.pyLog.fileHandleForReading.readDataToEndOfFile()
-                    let errorMessage = String(data: errorData, encoding: .utf8)
+                    var errorMessage = String(data: errorData, encoding: .utf8)
                         ?? String(data: errorData, encoding: .windowsCP1252)
                         ?? String(data: errorData, encoding: .isoLatin1)
                         ?? "未知错误。"
+                    if errorMessage.contains("Loading weights:   0%|"){
+                        errorMessage = "无法加载模型。关闭所有其他应用，然后重新运行prActIce可能会解决此问题。"
+                    }
                     ServiceStatus.shared.errorMessage = "QGIntelligence服务未能启动。请检查网络后重试。详细信息：\(errorMessage)"
                 }
                 return
@@ -143,6 +146,9 @@ struct prActIce {
                     })
                     if isError {
                         tui.Text("由于发生未知错误，请稍后重试。详细信息：\(errorMessage)", color: .error)
+                        tui.Text("按任意键继续...", color: .info)
+                        tui.waitKey()
+                        tui.clean()
                         continue
                     }
                     tui.Text("题目：\(ques)")
@@ -171,6 +177,9 @@ struct prActIce {
                     }, doneColor: .info)
                     if isError {
                         tui.Text("由于发生未知错误，请稍后重试。详细信息：\(errorMessage)", color: .error)
+                        tui.Text("按任意键继续...", color: .info)
+                        tui.waitKey()
+                        tui.clean()
                         continue
                     }
                     let questionQues = Question(question: ques, isWrong: !scoreResult.isFullScore, userAnswer: userAns, unit: Unit(grade: grade, subject: sub, unit: unit+1), type: type, score: scoreResult)
@@ -240,6 +249,8 @@ struct prActIce {
                                 }, doneColor: .info)
                                 if isError {
                                     tui.Text("由于发生未知错误，请稍后重试。详细信息：\(errorMessage)", color: .error)
+                                    tui.waitKey()
+                                    tui.clean()
                                     break
                                 }
                                 if scoreResult.isFullScore {
