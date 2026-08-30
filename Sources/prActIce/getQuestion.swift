@@ -149,15 +149,10 @@ func InitIntelligence() async throws {
     else {
         throw InitIntelligenceError.fileNotFound(fileName: "modelService.py")
     }
-    guard let modelQuesPath = bundle.path(forResource: "outputQues", ofType: nil)
+    guard let modelPath = bundle.path(forResource: "Qwen3.5-2B", ofType: nil)
     else {
-        throw InitIntelligenceError.fileNotFound(fileName: "outputQues")
+        throw InitIntelligenceError.fileNotFound(fileName: "modelService.py")
     }
-    guard let modelGradePath = bundle.path(forResource: "outputGrade", ofType: nil)
-    else {
-        throw InitIntelligenceError.fileNotFound(fileName: "outputGrade")
-    }
-
     guard let sysRoot = ProcessInfo.processInfo.environment["SystemRoot"] else { throw InitIntelligenceError.unknownError }
     let whereProcess = Process()
     whereProcess.executableURL = URL(fileURLWithPath: "\(sysRoot)\\System32\\WindowsPowerShell\\v1.0\\powershell.exe")
@@ -181,7 +176,7 @@ func InitIntelligence() async throws {
 
     let pyProcess = Process()
     pyProcess.executableURL = URL(fileURLWithPath: String(pyPathString))
-    pyProcess.arguments = [servicePath, modelQuesPath, modelGradePath]
+    pyProcess.arguments = [servicePath, modelPath]
     pyProcess.standardOutput = ServiceStatus.shared.pyLog
     pyProcess.standardError = ServiceStatus.shared.pyLog
     do {

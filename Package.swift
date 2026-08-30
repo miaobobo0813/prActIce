@@ -12,8 +12,7 @@ let package = Package(
             name: "prActIce", 
             resources: [
                 .copy("../model/modelService.py"), 
-                .copy("../model/outputGrade"), 
-                .copy("../model/outputQues")
+                .copy("../../Qwen3.5-2B")
             ]
         )
     ],

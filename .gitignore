@@ -11,3 +11,4 @@ Package.resolved
 *.venv
 *Sources/model/outputGrade
 *Sources/model/outputQues
+Qwen3.5-2B
