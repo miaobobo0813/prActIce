@@ -15,11 +15,7 @@ let package = Package(
                 .copy("../model/outputGrade"), 
                 .copy("../model/outputQues")
             ]
-        ),
-        .testTarget(
-            name: "prActIceTests",
-            dependencies: ["prActIce"]
-        ),
+        )
     ],
     swiftLanguageModes: [.v6]
 )

@@ -4,18 +4,44 @@ import WinSDK
 import Foundation
 import FoundationNetworking
 
-enum InitIntelligenceError: Error {
+enum InitIntelligenceError: Error, LocalizedError  {
     case pythonNotFound
     case fileNotFound(fileName: String)
     case unknownError
     case pyError(message: String)
+
+    var errorDescription: String? {
+        switch self {
+        case .pythonNotFound:
+            return "未找到可用的 Python 解释器。"
+        case .fileNotFound(let fileName):
+            return "未能找到文件：\(fileName)。"
+        case .unknownError:
+            return "发生未知错误。"
+        case .pyError(let message):
+            return message.isEmpty ? "Python 服务启动失败。" : message
+        }
+    }
 }
 
-enum CallError: Error {
+enum CallError: Error, LocalizedError {
     case invalidURL
     case requestFailed(details: String)
     case invalidResponse
     case decodingFailed
+
+    var errorDescription: String? {
+        switch self {
+        case .invalidURL:
+            return "服务地址无效。"
+        case .requestFailed(let details):
+            return details.isEmpty ? "服务请求失败。" : "服务请求失败：\(details)"
+        case .invalidResponse:
+            return "服务返回了无效响应。"
+        case .decodingFailed:
+            return "服务响应无法解析。"
+        }
+    }
 }
 
 struct GradeScoreResult: Codable {
@@ -44,11 +70,11 @@ func parseGradeScoreText(_ text: String) -> GradeScoreResult? {
         }
     }
 
-    let lowercasedText = trimmedText.lowercased()
-    if lowercasedText.contains("true") {
+    let normalizedText = trimmedText.lowercased()
+    if normalizedText.contains("true") || normalizedText.contains("正确") || normalizedText.contains("对") {
         return GradeScoreResult(scoreText: "1/1", isFullScore: true)
     }
-    if lowercasedText.contains("false") {
+    if normalizedText.contains("false") || normalizedText.contains("错误") || normalizedText.contains("错") {
         return GradeScoreResult(scoreText: "0/1", isFullScore: false)
     }
 
@@ -116,6 +142,7 @@ func CallGrade(ques: String, userAns: String) async throws -> GradeScoreResult {
     throw CallError.decodingFailed
 }
 
+@MainActor
 func InitIntelligence() async throws {
     let bundle = Bundle.module
     guard let servicePath = bundle.path(forResource: "modelService", ofType: "py")
@@ -155,18 +182,20 @@ func InitIntelligence() async throws {
     let pyProcess = Process()
     pyProcess.executableURL = URL(fileURLWithPath: String(pyPathString))
     pyProcess.arguments = [servicePath, modelQuesPath, modelGradePath]
-    let pyError = Pipe()
-    pyProcess.standardOutput = pyError
-    pyProcess.standardError = pyError
+    pyProcess.standardOutput = ServiceStatus.shared.pyLog
+    pyProcess.standardError = ServiceStatus.shared.pyLog
     do {
         try pyProcess.run()
-        pyProcess.waitUntilExit()
     } catch {
         throw InitIntelligenceError.pythonNotFound
     }
-    if pyProcess.terminationStatus != 0 {
-        let errorData = pyError.fileHandleForReading.readDataToEndOfFile()
-        let errorMessage = String(data: errorData, encoding: .utf8) ?? String(data: errorData, encoding: .isoLatin1) ?? "未知错误。"
+
+    if !pyProcess.isRunning {
+        let errorData = ServiceStatus.shared.pyLog.fileHandleForReading.readDataToEndOfFile()
+        let errorMessage = String(data: errorData, encoding: .utf8)
+            ?? String(data: errorData, encoding: .windowsCP1252)
+            ?? String(data: errorData, encoding: .isoLatin1)
+            ?? "未知错误。"
         throw InitIntelligenceError.pyError(message: errorMessage)
     }
 }

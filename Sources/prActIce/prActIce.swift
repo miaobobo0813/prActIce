@@ -9,6 +9,7 @@ final class ServiceStatus {
     static let shared = ServiceStatus()
     var isError: Bool = false
     var errorMessage: String = ""
+    let pyLog = Pipe()
 }
 
 @main
@@ -53,7 +54,12 @@ struct prActIce {
             } catch {
                 ServiceStatus.shared.isError = true
                 if (ServiceStatus.shared.errorMessage == ""){
-                    ServiceStatus.shared.errorMessage = "QGIntelligence服务未能启动。请检查网络后重试。"
+                    let errorData = ServiceStatus.shared.pyLog.fileHandleForReading.readDataToEndOfFile()
+                    let errorMessage = String(data: errorData, encoding: .utf8)
+                        ?? String(data: errorData, encoding: .windowsCP1252)
+                        ?? String(data: errorData, encoding: .isoLatin1)
+                        ?? "未知错误。"
+                    ServiceStatus.shared.errorMessage = "QGIntelligence服务未能启动。请检查网络后重试。详细信息：\(errorMessage)"
                 }
                 return
             }
@@ -180,6 +186,9 @@ struct prActIce {
                         practiceList.append(questionQues)
                         practiceStore.save(practiceList)
                     }
+                    tui.Text("按任意键继续...", color: .info)
+                    tui.waitKey()
+                    tui.clean()
                 }
                 tui.Text("按下任意键以回到开始页面...", color: .info)
                 tui.waitKey()
