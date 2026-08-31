@@ -74,7 +74,7 @@ service = FastAPI()
 def quesService(unit: QuestionRequest):
     print(f"[server] received /ques: {unit.grade} | {unit.subject} | {unit.unit} | {unit.type}", flush=True)
     messages = [
-        {"role": "system", "content": "你是一个出卷老师，请按照科目、单元、年级、题型、范围出题。choose代表选择/判断, fillBlank代表填空, answer代表实验探究/解答/综合。数学、科学使用浙教版，英语使用外研版，剩余科目使用人教版。只需出一题即可。不需要给出答案。",},
+        {"role": "system", "content": "你是一个出卷老师，请按照科目、单元、年级、题型、范围出题。choose代表选择/判断, fillBlank代表填空, answer代表实验探究/解答/综合。数学、科学使用浙教版，英语使用外研版，剩余科目使用人教版。选择仅出一空；填空仅出一问，但可以有多个空；解答仅出一题，但可以有围绕题干的多个小问。不需要给出答案。",},
         {"role": "user", "content": f"科目:{unit.subject}，年级:{unit.grade[1]+unit.grade[0]}，单元:{unit.unit}，题型:{unit.type}，范围:{unit.scope}"},
     ]
     response = text_generation_pipeline(
